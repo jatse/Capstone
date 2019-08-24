@@ -52,20 +52,20 @@ arm.node.SoloGameSceneController
 --macro keep('arm.node.SoloGameSceneController')
 arm.node.NetLobbySceneController
 --macro keep('arm.node.NetLobbySceneController')
-arm.node.MenuController
---macro keep('arm.node.MenuController')
-armory.trait.WalkNavigation
---macro keep('armory.trait.WalkNavigation')
-arm.node.QuitLogic
---macro keep('arm.node.QuitLogic')
-arm.node.OptionLogic
---macro keep('arm.node.OptionLogic')
-arm.node.MenuSceneController
---macro keep('arm.node.MenuSceneController')
-arm.node.OptionsSceneController
---macro keep('arm.node.OptionsSceneController')
 arm.node.SoloplayerLogic
 --macro keep('arm.node.SoloplayerLogic')
+armory.trait.WalkNavigation
+--macro keep('armory.trait.WalkNavigation')
+arm.node.MenuController
+--macro keep('arm.node.MenuController')
+arm.node.OptionLogic
+--macro keep('arm.node.OptionLogic')
 arm.node.MultiplayerLogic
 --macro keep('arm.node.MultiplayerLogic')
+arm.node.OptionsSceneController
+--macro keep('arm.node.OptionsSceneController')
+arm.node.QuitLogic
+--macro keep('arm.node.QuitLogic')
+arm.node.MenuSceneController
+--macro keep('arm.node.MenuSceneController')
 -main Main

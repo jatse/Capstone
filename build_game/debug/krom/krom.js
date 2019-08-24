@@ -567,41 +567,65 @@ arm_node_MenuSceneController.prototype = $extend(armory_logicnode_LogicTree.prot
 	,functionOutputNodes: null
 	,add: function() {
 		var _SetScene = new armory_logicnode_SetSceneNode(this);
+		var _Switch = new armory_logicnode_SwitchNode(this);
 		var _OnKeyboard = new armory_logicnode_OnKeyboardNode(this);
 		_OnKeyboard.property0 = "Started";
-		_OnKeyboard.property1 = "1";
-		_OnKeyboard.addOutputs([_SetScene]);
-		_SetScene.addInput(_OnKeyboard,0);
-		var _Scene = new armory_logicnode_SceneNode(this);
-		_Scene.property0 = "SoloGame";
-		_Scene.addOutputs([_SetScene]);
-		_SetScene.addInput(_Scene,0);
-		_SetScene.addOutputs([new armory_logicnode_NullNode(this)]);
-		_SetScene.addOutputs([new armory_logicnode_ObjectNode(this,"")]);
+		_OnKeyboard.property1 = "enter";
+		_OnKeyboard.addOutputs([_Switch]);
+		_Switch.addInput(_OnKeyboard,0);
+		var _GetProperty = new armory_logicnode_GetPropertyNode(this);
+		_GetProperty.addInput(new armory_logicnode_ObjectNode(this,"menuController"),0);
+		_GetProperty.addInput(new armory_logicnode_StringNode(this,"menuSelection"),0);
+		_GetProperty.addOutputs([_Switch]);
+		_GetProperty.addOutputs([new armory_logicnode_StringNode(this,"")]);
+		_Switch.addInput(_GetProperty,0);
+		var _Integer = new armory_logicnode_IntegerNode(this);
+		_Integer.addInput(new armory_logicnode_IntegerNode(this,0),0);
+		_Integer.addOutputs([_Switch]);
+		_Switch.addInput(_Integer,0);
+		var _Integer_001 = new armory_logicnode_IntegerNode(this);
+		_Integer_001.addInput(new armory_logicnode_IntegerNode(this,1),0);
+		_Integer_001.addOutputs([_Switch]);
+		_Switch.addInput(_Integer_001,0);
+		var _Integer_003 = new armory_logicnode_IntegerNode(this);
+		_Integer_003.addInput(new armory_logicnode_IntegerNode(this,2),0);
+		_Integer_003.addOutputs([_Switch]);
+		_Switch.addInput(_Integer_003,0);
+		var _Integer_002 = new armory_logicnode_IntegerNode(this);
+		_Integer_002.addInput(new armory_logicnode_IntegerNode(this,3),0);
+		_Integer_002.addOutputs([_Switch]);
+		_Switch.addInput(_Integer_002,0);
+		_Switch.addOutputs([new armory_logicnode_NullNode(this)]);
+		_Switch.addOutputs([_SetScene]);
 		var _SetScene_001 = new armory_logicnode_SetSceneNode(this);
-		var _OnKeyboard_001 = new armory_logicnode_OnKeyboardNode(this);
-		_OnKeyboard_001.property0 = "Started";
-		_OnKeyboard_001.property1 = "2";
-		_OnKeyboard_001.addOutputs([_SetScene_001]);
-		_SetScene_001.addInput(_OnKeyboard_001,0);
+		_SetScene_001.addInput(_Switch,2);
 		var _Scene_001 = new armory_logicnode_SceneNode(this);
 		_Scene_001.property0 = "NetworkLobby";
 		_Scene_001.addOutputs([_SetScene_001]);
 		_SetScene_001.addInput(_Scene_001,0);
 		_SetScene_001.addOutputs([new armory_logicnode_NullNode(this)]);
 		_SetScene_001.addOutputs([new armory_logicnode_ObjectNode(this,"")]);
+		_Switch.addOutputs([_SetScene_001]);
 		var _SetScene_002 = new armory_logicnode_SetSceneNode(this);
-		var _OnKeyboard_002 = new armory_logicnode_OnKeyboardNode(this);
-		_OnKeyboard_002.property0 = "Started";
-		_OnKeyboard_002.property1 = "3";
-		_OnKeyboard_002.addOutputs([_SetScene_002]);
-		_SetScene_002.addInput(_OnKeyboard_002,0);
+		_SetScene_002.addInput(_Switch,3);
 		var _Scene_002 = new armory_logicnode_SceneNode(this);
 		_Scene_002.property0 = "Options";
 		_Scene_002.addOutputs([_SetScene_002]);
 		_SetScene_002.addInput(_Scene_002,0);
 		_SetScene_002.addOutputs([new armory_logicnode_NullNode(this)]);
 		_SetScene_002.addOutputs([new armory_logicnode_ObjectNode(this,"")]);
+		_Switch.addOutputs([_SetScene_002]);
+		var _Shutdown = new armory_logicnode_ShutdownNode(this);
+		_Shutdown.addInput(_Switch,4);
+		_Shutdown.addOutputs([new armory_logicnode_NullNode(this)]);
+		_Switch.addOutputs([_Shutdown]);
+		_SetScene.addInput(_Switch,1);
+		var _Scene = new armory_logicnode_SceneNode(this);
+		_Scene.property0 = "SoloGame";
+		_Scene.addOutputs([_SetScene]);
+		_SetScene.addInput(_Scene,0);
+		_SetScene.addOutputs([new armory_logicnode_NullNode(this)]);
+		_SetScene.addOutputs([new armory_logicnode_ObjectNode(this,"")]);
 	}
 	,__class__: arm_node_MenuSceneController
 });
@@ -1534,6 +1558,18 @@ armory_logicnode_SetSceneNode.prototype = $extend(armory_logicnode_LogicNode.pro
 	}
 	,__class__: armory_logicnode_SetSceneNode
 });
+var armory_logicnode_ShutdownNode = function(tree) {
+	armory_logicnode_LogicNode.call(this,tree);
+};
+$hxClasses["armory.logicnode.ShutdownNode"] = armory_logicnode_ShutdownNode;
+armory_logicnode_ShutdownNode.__name__ = "armory.logicnode.ShutdownNode";
+armory_logicnode_ShutdownNode.__super__ = armory_logicnode_LogicNode;
+armory_logicnode_ShutdownNode.prototype = $extend(armory_logicnode_LogicNode.prototype,{
+	run: function(from) {
+		kha_System.stop();
+	}
+	,__class__: armory_logicnode_ShutdownNode
+});
 var armory_logicnode_StringNode = function(tree,value) {
 	if(value == null) {
 		value = "";
@@ -1560,6 +1596,30 @@ armory_logicnode_StringNode.prototype = $extend(armory_logicnode_LogicNode.proto
 		}
 	}
 	,__class__: armory_logicnode_StringNode
+});
+var armory_logicnode_SwitchNode = function(tree) {
+	armory_logicnode_LogicNode.call(this,tree);
+};
+$hxClasses["armory.logicnode.SwitchNode"] = armory_logicnode_SwitchNode;
+armory_logicnode_SwitchNode.__name__ = "armory.logicnode.SwitchNode";
+armory_logicnode_SwitchNode.__super__ = armory_logicnode_LogicNode;
+armory_logicnode_SwitchNode.prototype = $extend(armory_logicnode_LogicNode.prototype,{
+	run: function(from) {
+		var v1 = this.inputs[1].get();
+		if(this.inputs.length > 2) {
+			var _g = 2;
+			var _g1 = this.inputs.length;
+			while(_g < _g1) {
+				var i = _g++;
+				if(this.inputs[i].get() == v1) {
+					this.runOutput(i - 1);
+					return;
+				}
+			}
+		}
+		this.runOutput(0);
+	}
+	,__class__: armory_logicnode_SwitchNode
 });
 var armory_object_Uniforms = function() { };
 $hxClasses["armory.object.Uniforms"] = armory_object_Uniforms;
