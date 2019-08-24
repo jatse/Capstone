@@ -3,16 +3,14 @@
 -cp J:\Capstone\Sources
 -cp J:\ArmorySDK\armory\Sources
 -cp J:\ArmorySDK\iron\Sources
--cp J:\ArmorySDK\lib\zui\Sources
 -cp J:/ArmorySDK/armory
 -cp J:/ArmorySDK/iron
--cp J:/ArmorySDK/lib/zui
 -D hxcpp_smart_strings
 -D J:/ArmorySDK/armory
 -D J:/ArmorySDK/iron
--D J:/ArmorySDK/lib/zui
 -D arm_deferred
 -D arm_csm
+-D arm_clusters
 -D rp_hdr
 -D rp_renderer=Deferred
 -D rp_shadowmap
@@ -27,12 +25,8 @@
 -D arm_audio
 -D arm_noembed
 -D arm_soundcompress
--D arm_debug
--D arm_ui
--D arm_batch
 -D arm_skin
 -D arm_particles
--D arm_resizable
 -D sys_krom
 -D sys_g1
 -D sys_g2
@@ -54,23 +48,24 @@
 -D kha_version=1810
 -D kha_project_name=game
 -js krom\krom.js.temp
+arm.node.SoloGameSceneController
+--macro keep('arm.node.SoloGameSceneController')
+arm.node.NetLobbySceneController
+--macro keep('arm.node.NetLobbySceneController')
 arm.node.MenuController
 --macro keep('arm.node.MenuController')
-arm.node.SoloplayerLogic
---macro keep('arm.node.SoloplayerLogic')
 armory.trait.WalkNavigation
 --macro keep('armory.trait.WalkNavigation')
-armory.trait.internal.CanvasScript
---macro keep('armory.trait.internal.CanvasScript')
 arm.node.QuitLogic
 --macro keep('arm.node.QuitLogic')
-armory.trait.internal.Bridge
---macro keep('armory.trait.internal.Bridge')
 arm.node.OptionLogic
 --macro keep('arm.node.OptionLogic')
-armory.trait.internal.DebugConsole
---macro keep('armory.trait.internal.DebugConsole')
+arm.node.MenuSceneController
+--macro keep('arm.node.MenuSceneController')
+arm.node.OptionsSceneController
+--macro keep('arm.node.OptionsSceneController')
+arm.node.SoloplayerLogic
+--macro keep('arm.node.SoloplayerLogic')
 arm.node.MultiplayerLogic
 --macro keep('arm.node.MultiplayerLogic')
---times
 -main Main

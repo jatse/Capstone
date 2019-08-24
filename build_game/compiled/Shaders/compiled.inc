@@ -5,7 +5,7 @@
 #define _Deferred
 #define _ShadowMap
 #define _CSM
-#define _Sun
+#define _Clusters
 #define _SMAA
 #define _SSAO
 #define _Emission

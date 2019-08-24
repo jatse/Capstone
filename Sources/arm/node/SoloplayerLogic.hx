@@ -8,7 +8,6 @@ package arm.node;
 
 	public function new() {
 		super();
-		name = "SoloplayerLogic";
 		this.functionNodes = new Map();
 		this.functionOutputNodes = new Map();
 		notifyOnAdd(add);

@@ -8,11 +8,11 @@ class Main {
         iron.object.LightObject.cascadeCount = 4;
         iron.object.LightObject.cascadeSplitFactor = 0.800000011920929;
         armory.system.Starter.main(
-            'mainMenu',
+            'MainMenu',
             0,
+            false,
             true,
-            true,
-            true,
+            false,
             1440,
             810,
             1,
