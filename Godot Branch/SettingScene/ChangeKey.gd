@@ -27,8 +27,18 @@ func _input(event):
 		if event is InputEventKey:
 			var action = self.get_parent().name
 			self.get_parent().get_parent().map_key_to_action(event.scancode, action)
+			toggledState = false
+			self.text = originalText
+			self.pressed = false
+			
+		#if joypad event, register, and untoggle
+		if event is InputEventJoypadButton:
+			var action = self.get_parent().name
+			self.get_parent().get_parent().map_key_to_action(event.button_index, action)
+			toggledState = false
 			self.text = originalText
 			self.pressed = false
 		
-		#if event is InputJoypadButton:
-			
+		#Prevent keypress from propagating
+		#If enter/accept used for key, it won't prime again.
+		get_tree().set_input_as_handled()

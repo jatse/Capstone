@@ -3,7 +3,7 @@
 [ext_resource path="res://Assets/Trajan_52.tres" type="DynamicFont" id=1]
 [ext_resource path="res://TitleScene/TitleMenu.gd" type="Script" id=2]
 [ext_resource path="res://TitleScene/MenuButton.tscn" type="PackedScene" id=3]
-[ext_resource path="res://OptionButton.gd" type="Script" id=4]
+[ext_resource path="res://TitleScene/OptionButton.gd" type="Script" id=4]
 [ext_resource path="res://TitleScene/QuitButton.gd" type="Script" id=5]
 [ext_resource path="res://Assets/TrajanPro-Bold.otf" type="DynamicFontData" id=6]
 
