@@ -1,0 +1,90 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Trajan_52.tres" type="DynamicFont" id=1]
+[ext_resource path="res://TitleScene/TitleMenu.gd" type="Script" id=2]
+[ext_resource path="res://TitleScene/MenuButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://OptionButton.gd" type="Script" id=4]
+[ext_resource path="res://TitleScene/QuitButton.gd" type="Script" id=5]
+[ext_resource path="res://Assets/TrajanPro-Bold.otf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 10
+font_data = ExtResource( 6 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 80.0
+margin_top = 80.0
+margin_right = -80.0
+margin_bottom = -80.0
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+margin_right = 864.0
+margin_bottom = 126.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Title Go Here"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 134.0
+margin_right = 864.0
+margin_bottom = 306.0
+size_flags_vertical = 3
+
+[node name="Left Space" type="Control" parent="VBoxContainer/HBoxContainer"]
+margin_right = 288.0
+margin_bottom = 172.0
+size_flags_horizontal = 3
+
+[node name="Menu" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 296.0
+margin_right = 568.0
+margin_bottom = 172.0
+custom_constants/separation = 20
+script = ExtResource( 2 )
+
+[node name="SinglePlayerButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_right = 272.0
+margin_bottom = 44.0
+text = "Single Player"
+
+[node name="SettingsButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_top = 64.0
+margin_right = 272.0
+margin_bottom = 108.0
+text = "Settings"
+script = ExtResource( 4 )
+
+[node name="QuitButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_top = 128.0
+margin_right = 272.0
+margin_bottom = 172.0
+text = "Exit Game"
+script = ExtResource( 5 )
+
+[node name="Right Space" type="Control" parent="VBoxContainer/HBoxContainer"]
+margin_left = 576.0
+margin_right = 864.0
+margin_bottom = 172.0
+size_flags_horizontal = 3
+
+[node name="Version" type="Label" parent="VBoxContainer"]
+margin_top = 314.0
+margin_right = 864.0
+margin_bottom = 440.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+text = "Alpha Release 0.0.1"
+valign = 2
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/SettingsButton" to="VBoxContainer/HBoxContainer/Menu/SettingsButton" method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/QuitButton" to="VBoxContainer/HBoxContainer/Menu/QuitButton" method="_on_QuitButton_pressed"]
