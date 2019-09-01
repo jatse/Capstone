@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://SettingScene/ControlsMenu.gd" type="Script" id=1]
 [ext_resource path="res://SettingScene/ChangeKey.gd" type="Script" id=2]
 [ext_resource path="res://SettingScene/DefaultButton.gd" type="Script" id=3]
 [ext_resource path="res://SettingScene/SaveReturnButton.gd" type="Script" id=4]
+[ext_resource path="res://Assets/DemoPlayer.tscn" type="PackedScene" id=5]
+[ext_resource path="res://SettingScene/DemoPlayer.gd" type="Script" id=6]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -339,14 +341,8 @@ size_flags_horizontal = 3
 text = "Save and Return"
 script = ExtResource( 4 )
 
-[node name="Control" type="Control" parent="HBoxContainer"]
-margin_left = 488.0
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Viewport" type="Viewport" parent="HBoxContainer/Control"]
+[node name="DemoPlayer" parent="." instance=ExtResource( 5 )]
+script = ExtResource( 6 )
 [connection signal="toggled" from="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftForwardKey/ChangeKey" to="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftForwardKey/ChangeKey" method="_on_ChangeKey_toggled"]
 [connection signal="toggled" from="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftBackwardKey/ChangeKey" to="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftBackwardKey/ChangeKey" method="_on_ChangeKey_toggled"]
 [connection signal="toggled" from="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftStrafeKey/ChangeKey" to="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftStrafeKey/ChangeKey" method="_on_ChangeKey_toggled"]

@@ -50,6 +50,9 @@ func update_keymap_UI():
 	get_node("RightBackwardKey/AssignedKey").text = get_input_name(controls["RightBackwardKey"])
 	get_node("RightStrafeKey/AssignedKey").text = get_input_name(controls["RightStrafeKey"])
 	get_node("RightFireKey/AssignedKey").text = get_input_name(controls["RightFireKey"])
+	
+	#update player
+	get_node("../../../../DemoPlayer").load_input_map()
 
 #Sets the current controls to default controls
 func set_keys_to_default():

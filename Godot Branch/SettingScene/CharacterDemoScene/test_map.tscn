@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://SettingScene/CharacterDemoScene/checkered.material" type="Material" id=1]
+
+[sub_resource type="ArrayMesh" id=1]
+resource_name = "checker"
+surfaces/0 = {
+"aabb": AABB( -5, 0, -5, 10, 1e-005, 10 ),
+"array_data": PoolByteArray( 0, 0, 160, 192, 0, 0, 0, 0, 0, 0, 160, 64, 0, 127, 0, 0, 0, 0, 127, 127, 255, 59, 255, 59, 0, 0, 160, 64, 0, 0, 0, 0, 0, 0, 160, 192, 0, 127, 0, 0, 0, 0, 127, 127, 141, 6, 144, 6, 0, 0, 160, 192, 0, 0, 0, 0, 0, 0, 160, 192, 0, 127, 0, 0, 0, 0, 127, 127, 144, 6, 255, 59, 0, 0, 160, 64, 0, 0, 0, 0, 0, 0, 160, 64, 0, 127, 0, 0, 0, 0, 127, 127, 255, 59, 141, 6 ),
+"array_index_data": PoolByteArray( 0, 0, 2, 0, 1, 0, 0, 0, 1, 0, 3, 0 ),
+"blend_shape_data": [  ],
+"format": 97559,
+"index_count": 6,
+"material": ExtResource( 1 ),
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 4
+}
+
+[sub_resource type="ConcavePolygonShape" id=2]
+data = PoolVector3Array( -5, 0, 5, -5, 0, -5, 5, 0, -5, -5, 0, 5, 5, 0, -5, 5, 0, 5 )
+
+[node name="testMap" type="StaticBody"]
+
+[node name="checker" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="shape" type="CollisionShape" parent="."]
+shape = SubResource( 2 )
