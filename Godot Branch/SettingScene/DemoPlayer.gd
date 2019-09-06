@@ -1,97 +1,171 @@
 extends Spatial
 
-#holds keymapping
-var controls = {}
-var animation_player
+var SPEED = 0.05
+var controls = {}				#holds keymapping
+var animation_player			#the animation controller
+var player_action = "Idle"		#indicates player's last animation state, prevents loooping
+var player_null_state			#used for determining idle state
+var player_state = {			#indicates which keys are down
+		"Forward" : false,
+		"Backward" : false,
+		"Left" : false,
+		"Right" : false,
+		"FireLeft" : false,
+		"FireRight" : false,
+		"SteerLeft" : false,
+		"SteerRight" : false}
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#get animator
+	#get animator controller
 	animation_player = get_node("AnimationPlayer")
+	
+	#used to set idle state
+	player_null_state = player_state.duplicate()
 	
 	#map keys to actions
 	load_input_map()
 
-#reads in config file to get keymap
-#defaults to default key map if file not exits
+
+#imports controls from ControlsMenu.gd
 func load_input_map():
-	controls = get_node("../HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu").controls.duplicate()
+	controls = get_node("../../../2DMenu/Viewport/Control/HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu").controls.duplicate()
 
+
+# Called with each input event
 func _input(event):
-	#convert event to code
+	#TRANSLATE 
+	#event to input code
 	var code
-	
-	#account for keyboard and gamepad
-	if event is InputEventKey:
+
+	if event is InputEventKey:				#keyboard events
 		code = event.scancode
-	if event is InputEventJoypadButton:
+	elif event is InputEventJoypadButton:	#joypad events
 		code = event.button_index
-
-	#call respective method
-	#controls only react from idle state
+	else:									#other events
+		return
+		
+		
+	#SET STATE
+	#state based on input code
 	if code == controls["LeftForwardKey"]:
-		ldrive(event)
-	elif code == controls["LeftBackwardKey"]:
-		lreverse(event)
-	elif code == controls["LeftStrafeKey"]:
-		lstrafe(event)
-	elif code == controls["LeftFireKey"]:
-		lfire(event)
-	elif code == controls["RightForwardKey"]:
-		rdrive(event)
-	elif code == controls["RightBackwardKey"]:
-		rreverse(event)
-	elif code == controls["RightStrafeKey"]:
-		rstrafe(event)
-	elif code == controls["RightFireKey"]:
-		rfire(event)
-
-#event functions
-func ldrive(event):
-	if animation_player.get_current_animation() == "Idle":
-		animation_player.play("MoveForward")
-	if event.pressed == false:
-		idle()
-
-func lreverse(event):
-	if animation_player.get_current_animation() == "Idle":
-		animation_player.play("MoveBackward")
-	if event.pressed == false:
-		idle()
-
-func lstrafe(event):
-	if animation_player.get_current_animation() == "Idle":
-		animation_player.play("StrafeLeft")
-	if event.pressed == false:
-		idle()
-
-func lfire(event):
-	animation_player.play("FireLeft")
-	animation_player.connect("animation_finished", self, "Idle")
-	animation_player.animation_set_next("FireLeft", "Idle")
-
-func rdrive(event):
-	if animation_player.get_current_animation() == "Idle":
-		animation_player.play("MoveForward")
-	if event.pressed == false:
-		idle()
+		if event.is_pressed():
+			player_state["Forward"] = true
+			player_state["SteerRight"] = true
+		else:
+			player_state["Forward"] = false
+			player_state["SteerRight"] = false
 		
-func rreverse(event):
-	if animation_player.get_current_animation() == "Idle":
-		animation_player.play("MoveBackward")
-	if event.pressed == false:
-		idle()
+	if code == controls["LeftBackwardKey"]:
+		if event.is_pressed():
+			player_state["Backward"] = true
+			player_state["SteerLeft"] = true
+		else:
+			player_state["Backward"] = false
+			player_state["SteerLeft"] = false
 		
-func rstrafe(event):
-	if animation_player.get_current_animation() == "Idle":
-		animation_player.play("StrafeRight")
-	if event.pressed == false:
-		idle()
+	#allow only one strafe event at any time
+	if code == controls["LeftStrafeKey"] && !player_state["Right"]:
+		if event.is_pressed():
+			player_state["Left"] = true
+		else:
+			player_state["Left"] = false
 		
-func rfire(event):
-	animation_player.play("FireRight")
-	animation_player.connect("animation_finished", self, "Idle")
-	animation_player.animation_set_next("FireRight", "Idle")
+	#allow only one firing event at any time
+	if code == controls["LeftFireKey"] && !player_state["FireRight"]:
+		if !event.is_pressed():
+			player_state["FireLeft"] = true
 	
-func idle():
-	animation_player.play("Idle")
+	if code == controls["RightForwardKey"]:
+		if event.is_pressed():
+			player_state["Forward"] = true
+			player_state["SteerLeft"] = true
+		else:
+			player_state["Forward"] = false
+			player_state["SteerLeft"] = false
+		
+	if code == controls["RightBackwardKey"]:
+		if event.is_pressed():
+			player_state["Backward"] = true
+			player_state["SteerRight"] = true
+		else:
+			player_state["Backward"] = false
+			player_state["SteerRight"] = false
+		
+	#allow only one strafe event at any time
+	if code == controls["RightStrafeKey"] && !player_state["Left"]:
+		if event.is_pressed():
+			player_state["Right"] = true
+		else:
+			player_state["Right"] = false
+	
+	#allow only one firing event at any time
+	if code == controls["RightFireKey"] && !player_state["FireLeft"]:
+		if !event.is_pressed():
+			player_state["FireRight"] = true
+
+
+#Controls player's motion
+func animatePlayer():
+	# SET ANIMATION
+	var currentAnimation = animation_player.get_current_animation()		#Used to determine completion of firing animation
+	#Firing takes top priority
+	#Do not play animation if already playing
+	if currentAnimation != "FireLeft" && currentAnimation != "FireRight":
+		if player_state["FireLeft"]:
+			animation_player.play("FireLeft")
+			player_action = "Firing"
+			player_state["FireLeft"] = false
+		elif player_state["FireRight"]:
+			animation_player.play("FireRight")
+			player_action = "Firing"
+			player_state["FireRight"] = false
+			
+		#Handle movement animations
+		elif player_state["Forward"]:
+			if player_action != "MoveForward":
+				animation_player.play("MoveForward")
+				player_action = "MoveForward"
+		elif player_state["Backward"]:
+			if player_action != "MoveBackward":
+				animation_player.play("MoveBackward")
+				player_action = "MoveBackward"
+		elif player_state["Left"]:
+			if player_action != "StrafeLeft":
+				animation_player.play("StrafeLeft")
+				player_action = "StrafeLeft"
+		elif player_state["Right"]:
+			if player_action != "StrafeRight":
+				animation_player.play("StrafeRight")
+				player_action = "StrafeRight"
+			
+		#If not moving, idle
+		elif player_null_state.values() == player_state.values(): 
+			animation_player.play("Idle")
+			player_action = "Idle"
+	
+	#MOVEMENT
+	if player_state["Forward"]:
+		self.translate(Vector3(0, 0, SPEED))
+	if player_state["Backward"]:
+		self.translate(Vector3(0, 0, -SPEED))
+	if player_state["Left"]:
+		self.translate(Vector3(SPEED, 0, 0))
+	if player_state["Right"]:
+		self.translate(Vector3(-SPEED, 0, 0))
+	if player_state["SteerLeft"]:
+		self.rotate_y(SPEED/2)
+	if player_state["SteerRight"]:
+		self.rotate_y(-SPEED/2)
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	#After firing animation completes, idle
+	if anim_name == "FireLeft" || anim_name == "FireRight":
+		animation_player.play("Idle")
+		player_action = "Idle"
+
+
+func _process(delta):
+	animatePlayer()

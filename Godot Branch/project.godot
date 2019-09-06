@@ -19,6 +19,11 @@ config/name="Capstone"
 run/main_scene="res://TitleScene/TitleScreen.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/dpi/allow_hidpi=true
+window/stretch/aspect="keep"
+
 [gui]
 
 theme/use_hidpi=true
