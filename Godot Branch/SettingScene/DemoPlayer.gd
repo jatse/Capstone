@@ -1,4 +1,4 @@
-extends Spatial
+extends KinematicBody
 
 var SPEED = 0.05
 var controls = {}				#holds keymapping
@@ -147,17 +147,17 @@ func animatePlayer():
 	
 	#MOVEMENT
 	if player_state["Forward"]:
-		self.translate(Vector3(0, 0, SPEED))
+		move_and_collide(get_transform().basis.xform(Vector3(0, 0, SPEED)))	#transform based on local axis
 	if player_state["Backward"]:
-		self.translate(Vector3(0, 0, -SPEED))
+		move_and_collide(get_transform().basis.xform(Vector3(0, 0, -SPEED)))
 	if player_state["Left"]:
-		self.translate(Vector3(SPEED, 0, 0))
+		move_and_collide(get_transform().basis.xform(Vector3(SPEED, 0, 0)))
 	if player_state["Right"]:
-		self.translate(Vector3(-SPEED, 0, 0))
+		move_and_collide(get_transform().basis.xform(Vector3(-SPEED, 0, 0)))
 	if player_state["SteerLeft"]:
-		self.rotate_y(SPEED/2)
+		rotate_y(SPEED/4)
 	if player_state["SteerRight"]:
-		self.rotate_y(-SPEED/2)
+		rotate_y(-SPEED/4)
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
