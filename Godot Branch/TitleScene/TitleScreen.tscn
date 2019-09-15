@@ -1,15 +1,16 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assets/Trajan_52.tres" type="DynamicFont" id=1]
 [ext_resource path="res://TitleScene/TitleMenu.gd" type="Script" id=2]
 [ext_resource path="res://TitleScene/MenuButton.tscn" type="PackedScene" id=3]
-[ext_resource path="res://TitleScene/OptionButton.gd" type="Script" id=4]
-[ext_resource path="res://TitleScene/QuitButton.gd" type="Script" id=5]
-[ext_resource path="res://Assets/TrajanPro-Bold.otf" type="DynamicFontData" id=6]
+[ext_resource path="res://TitleScene/SPlayerButton.gd" type="Script" id=4]
+[ext_resource path="res://TitleScene/OptionButton.gd" type="Script" id=5]
+[ext_resource path="res://TitleScene/QuitButton.gd" type="Script" id=6]
+[ext_resource path="res://Assets/TrajanPro-Bold.otf" type="DynamicFontData" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 10
-font_data = ExtResource( 6 )
+font_data = ExtResource( 7 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -55,6 +56,7 @@ margin_left = 0.0
 margin_right = 272.0
 margin_bottom = 44.0
 text = "Single Player"
+script = ExtResource( 4 )
 
 [node name="SettingsButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
 margin_left = 0.0
@@ -62,7 +64,7 @@ margin_top = 64.0
 margin_right = 272.0
 margin_bottom = 108.0
 text = "Settings"
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 
 [node name="QuitButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
 margin_left = 0.0
@@ -70,7 +72,7 @@ margin_top = 128.0
 margin_right = 272.0
 margin_bottom = 172.0
 text = "Exit Game"
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
 [node name="Right Space" type="Control" parent="VBoxContainer/HBoxContainer"]
 margin_left = 576.0
@@ -86,5 +88,6 @@ size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
 text = "Alpha Release 0.0.1"
 valign = 2
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/Menu/SinglePlayerButton" to="VBoxContainer/HBoxContainer/Menu/SinglePlayerButton" method="_on_SinglePlayerButton_button_down"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/SettingsButton" to="VBoxContainer/HBoxContainer/Menu/SettingsButton" method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/QuitButton" to="VBoxContainer/HBoxContainer/Menu/QuitButton" method="_on_QuitButton_pressed"]

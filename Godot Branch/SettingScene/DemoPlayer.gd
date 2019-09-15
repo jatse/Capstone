@@ -6,8 +6,10 @@ var animation_player			#the animation controller
 var player_action = "Idle"		#indicates player's last animation state, prevents loooping
 var player_null_state			#used for determining idle state
 var player_state = {			#indicates which keys are down
-		"Forward" : false,
-		"Backward" : false,
+		"LForward" : false,
+		"LBackward" : false,
+		"RForward" : false,
+		"RBackward" : false,
 		"Left" : false,
 		"Right" : false,
 		"FireLeft" : false,
@@ -51,18 +53,18 @@ func _input(event):
 	#state based on input code
 	if code == controls["LeftForwardKey"]:
 		if event.is_pressed():
-			player_state["Forward"] = true
+			player_state["LForward"] = true
 			player_state["SteerRight"] = true
 		else:
-			player_state["Forward"] = false
+			player_state["LForward"] = false
 			player_state["SteerRight"] = false
 		
 	if code == controls["LeftBackwardKey"]:
 		if event.is_pressed():
-			player_state["Backward"] = true
+			player_state["LBackward"] = true
 			player_state["SteerLeft"] = true
 		else:
-			player_state["Backward"] = false
+			player_state["LBackward"] = false
 			player_state["SteerLeft"] = false
 		
 	#allow only one strafe event at any time
@@ -79,18 +81,18 @@ func _input(event):
 	
 	if code == controls["RightForwardKey"]:
 		if event.is_pressed():
-			player_state["Forward"] = true
+			player_state["RForward"] = true
 			player_state["SteerLeft"] = true
 		else:
-			player_state["Forward"] = false
+			player_state["RForward"] = false
 			player_state["SteerLeft"] = false
 		
 	if code == controls["RightBackwardKey"]:
 		if event.is_pressed():
-			player_state["Backward"] = true
+			player_state["RBackward"] = true
 			player_state["SteerRight"] = true
 		else:
-			player_state["Backward"] = false
+			player_state["RBackward"] = false
 			player_state["SteerRight"] = false
 		
 	#allow only one strafe event at any time
@@ -123,11 +125,11 @@ func animatePlayer():
 			player_state["FireRight"] = false
 			
 		#Handle movement animations
-		elif player_state["Forward"]:
+		elif player_state["LForward"] || player_state["RForward"]:
 			if player_action != "MoveForward":
 				animation_player.play("MoveForward")
 				player_action = "MoveForward"
-		elif player_state["Backward"]:
+		elif player_state["LBackward"] || player_state["RBackward"]:
 			if player_action != "MoveBackward":
 				animation_player.play("MoveBackward")
 				player_action = "MoveBackward"
@@ -146,18 +148,22 @@ func animatePlayer():
 			player_action = "Idle"
 	
 	#MOVEMENT
-	if player_state["Forward"]:
+	if player_state["LForward"] || player_state["RForward"]:
 		move_and_collide(get_transform().basis.xform(Vector3(0, 0, SPEED)))	#transform based on local axis
-	if player_state["Backward"]:
+	if player_state["LForward"] && player_state["RForward"]:
+		move_and_collide(get_transform().basis.xform(Vector3(0, 0, SPEED)))	#double speed with same direction down
+	if player_state["LBackward"] || player_state["RBackward"]:
 		move_and_collide(get_transform().basis.xform(Vector3(0, 0, -SPEED)))
+	if player_state["LBackward"] && player_state["RBackward"]:
+		move_and_collide(get_transform().basis.xform(Vector3(0, 0, -SPEED)))	#double speed with same direction down
 	if player_state["Left"]:
 		move_and_collide(get_transform().basis.xform(Vector3(SPEED, 0, 0)))
 	if player_state["Right"]:
 		move_and_collide(get_transform().basis.xform(Vector3(-SPEED, 0, 0)))
 	if player_state["SteerLeft"]:
-		rotate_y(SPEED/4)
+		rotate_y(SPEED/2.5)
 	if player_state["SteerRight"]:
-		rotate_y(-SPEED/4)
+		rotate_y(-SPEED/2.5)
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):

@@ -1,6 +1,6 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Assets/red_uv.material" type="Material" id=1]
+[ext_resource path="res://Assets/PlayerUV.material" type="Material" id=1]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "player"
@@ -266,6 +266,7 @@ tracks/16/keys = PoolRealArray( 0, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.4791
 [sub_resource type="Animation" id=4]
 resource_name = "Idle"
 length = 5.0
+loop = true
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Armature:finger1_l")
 tracks/0/interp = 1
@@ -889,6 +890,9 @@ extents = Vector3( 0.296405, 0.121445, 0.0714219 )
 radius = 0.143648
 height = 0.357548
 
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 0.032014, 0.0284345, 0.0454628 )
+
 [node name="Player" type="KinematicBody"]
 
 [node name="Armature" type="Skeleton" parent="."]
@@ -983,6 +987,7 @@ mesh = SubResource( 1 )
 material/0 = ExtResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
 anims/FireLeft = SubResource( 2 )
 anims/FireRight = SubResource( 3 )
 anims/Idle = SubResource( 4 )
@@ -1002,3 +1007,13 @@ shape = SubResource( 10 )
 [node name="tank_collide" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.959699, -0.281029, 0, 0.281029, 0.959699, 0, 0.860334, -0.251801 )
 shape = SubResource( 11 )
+
+[node name="camerabump" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.836244, 0.317606 )
+shape = SubResource( 12 )
+
+[node name="LeftSpawnBullet" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.404473, 0.802016, 0.856273 )
+
+[node name="RightSpawnBullet" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.378663, 0.802016, 0.856273 )

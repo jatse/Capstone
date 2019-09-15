@@ -31,7 +31,7 @@ func _input(event):
 			self.text = originalText
 			self.pressed = false
 			
-		#if joypad event, register, and untoggle
+		#if joypad button event, register, and untoggle
 		if event is InputEventJoypadButton:
 			var action = self.get_parent().name
 			self.get_parent().get_parent().map_key_to_action(event.button_index, action)
