@@ -4,6 +4,7 @@ var gameClock
 var clockDisplay
 var energyLevel
 var massMeter
+var damageGauge
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,7 +16,9 @@ func _ready():
 	#define UI elements
 	energyLevel = get_node("VBoxContainer/MeterContainer/EnergyLevel")
 	massMeter = get_node("VBoxContainer/MeterContainer/MassMeter")
-	
+	damageGauge = get_node("VBoxContainer/MeterContainer/DamageGauge")
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 # warning-ignore:unused_argument
 func _process(delta):
@@ -28,6 +31,8 @@ func _process(delta):
 	clockDisplay.set_text(str(minutes) + ":" + str(seconds))
 
 #sets UI text
-func updateUI(energy, mass):
+func updateUI(energy, mass, damage):
 	energyLevel.set_text(str(energy))
 	massMeter.set_text(str(mass))
+	damageGauge.set_text(str(damage))
+	

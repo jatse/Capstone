@@ -3,15 +3,15 @@ extends KinematicBody
 #player variables
 var MAX_SPEED = .15
 var MIN_SPEED = .05
-var mass = 2000
+var mass = 0
 var MAX_MASS = 2000
 var energy = 3000
-var damage = 0
+var damaged = 0
 var MAX_ENERGY = 3000
 var MOVE_COST = 1
 var FIRE_COST = 10
 var RECOVERY_RATE = 50	#amount recovered per interval
-var RECOVERY_SPEED = .5 #duration(seconds) between intervals
+var RECOVERY_SPEED = .3 #duration(seconds) between intervals
 var gravity
 var playerUI
 var timeElapsed = 0
@@ -44,7 +44,7 @@ var default_controls = {
 	"RightStrafeKey" : KEY_L,
 	"RightFireKey" : KEY_J
 }
-
+var PLAYER_BULLET = preload("res://Assets/PlayerBullet.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -158,13 +158,13 @@ func animatePlayer():
 		if player_state["FireLeft"] && energy > FIRE_COST:
 			animation_player.play("FireLeft")
 			player_action = "Firing"
-			get_node("..").spawnProjectile("player", $LeftSpawnBullet.global_transform)
+			spawnProjectile($LeftSpawnBullet.global_transform)
 			energy -= FIRE_COST
 			player_state["FireLeft"] = false
 		elif player_state["FireRight"] && energy > FIRE_COST:
 			animation_player.play("FireRight")
 			player_action = "Firing"
-			get_node("..").spawnProjectile("player", $RightSpawnBullet.global_transform)
+			spawnProjectile($RightSpawnBullet.global_transform)
 			energy -= FIRE_COST
 			player_state["FireRight"] = false
 			
@@ -192,8 +192,8 @@ func animatePlayer():
 			player_action = "Idle"
 	
 	#PHYSICAL MOVEMENT
-	#move only with enough energy
-	if energy > MOVE_COST:
+	#move only with enough energy, can move with 0 energy but takes damage.
+	if energy > 0:
 		var col_info #collision detection information
 		#determine movement speed from mass carried
 		var speed = ((MAX_MASS - mass)/MAX_MASS * (MAX_SPEED - MIN_SPEED)) + MIN_SPEED
@@ -202,14 +202,14 @@ func animatePlayer():
 			col_info = move_and_collide(get_transform().basis.xform(Vector3(0, 0, speed)))	#transform based on local axis
 			energy -= MOVE_COST
 		if player_state["LForward"] && player_state["RForward"]:
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 			move_and_collide(get_transform().basis.xform(Vector3(0, 0, speed)))	#double speed with same direction down
 			energy -= MOVE_COST
 		if player_state["LBackward"] || player_state["RBackward"]:
 			col_info = move_and_collide(get_transform().basis.xform(Vector3(0, 0, -speed)))
 			energy -= MOVE_COST
 		if player_state["LBackward"] && player_state["RBackward"]:
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 			move_and_collide(get_transform().basis.xform(Vector3(0, 0, -speed)))	#double speed with same direction down
 			energy -= MOVE_COST
 		if player_state["Left"]:
@@ -224,10 +224,28 @@ func animatePlayer():
 		if player_state["SteerRight"]:
 			rotate_y(-speed/2.5)
 			energy -= MOVE_COST
-		
+			
 		#COLLISION DETECTION
 		if col_info:
-			print(col_info.collider.name)
+			#if collider can be knocked back, knock it back
+			if col_info.collider.has_method("knockback"):
+				col_info.collider.knockback(mass + 1000, speed, col_info.normal)
+			#if collider can be picked up, pick it up and add to mass
+			if col_info.collider.has_method("pickup") && mass < MAX_MASS:
+				col_info.collider.pickup()
+				mass += 100
+
+
+#adds damage taken to total damage taken
+func damage(amount = 10):
+	damaged += amount
+
+
+#spawns a bullet
+func spawnProjectile(proj_trans):
+	var projectile = PLAYER_BULLET.instance()
+	projectile.transform = proj_trans
+	get_parent().add_child(projectile)
 
 
 #Called each frame
@@ -235,21 +253,27 @@ func _process(delta):
 	animatePlayer()
 	
 	#keep energy bar from displaying negative numbers
+	#if try to use action when no energy, take damage
 	if energy < 0:
+		damage()
 		energy = 0
 	
 	#recover some energy each second
 	timeElapsed += delta
 	if timeElapsed >= RECOVERY_SPEED:
 		timeElapsed = 0
-		energy += RECOVERY_RATE
-		#recover up to maxmium amount
-		if energy > MAX_ENERGY - damage:
-			energy = MAX_ENERGY - damage
+		#stop recovering at max
+		if energy >= MAX_ENERGY:
+			energy = MAX_ENERGY
+		#recover slowly in damaged range
+		elif energy > MAX_ENERGY - damaged:
+			energy += RECOVERY_RATE/5
+		else:
+			energy += RECOVERY_RATE
 	
 	#account for gravity
 # warning-ignore:return_value_discarded
 	move_and_collide(get_transform().basis.xform(Vector3(0, -gravity, 0)))
 	
 	#update UI
-	playerUI.updateUI(energy, mass)
+	playerUI.updateUI(energy, mass, damaged)

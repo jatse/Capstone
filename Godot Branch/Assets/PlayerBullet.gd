@@ -1,6 +1,6 @@
 extends KinematicBody
 
-
+var SPARKS = preload("res://Assets/Sparks.tscn")
 var SPEED = 2
 
 
@@ -10,6 +10,12 @@ func _process(delta):
 	
 	#check for collision
 	if col_info:
-		#if collide, create sparks and remove
-		get_parent().spawnSparks(self.transform)
+		#damage colliding object
+		if col_info.collider.has_method("damage"):
+			col_info.collider.damage()
+			
+		#create sparks and remove
+		var sparks = SPARKS.instance()
+		sparks.transform = self.transform
+		get_parent().add_child(sparks)
 		queue_free()
