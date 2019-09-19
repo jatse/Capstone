@@ -1,13 +1,13 @@
 extends KinematicBody
 
 #player variables
-var MAX_SPEED = .15
-var MIN_SPEED = .05
-var mass = 0
-var MAX_MASS = 2000
-var energy = 3000
+var MAX_SPEED = 0.10
+var MIN_SPEED = 0.05
+var mass = 0.0
+var MAX_MASS = 2000.0
+var energy = 2000
 var damaged = 0
-var MAX_ENERGY = 3000
+var MAX_ENERGY = 2000
 var MOVE_COST = 1
 var FIRE_COST = 10
 var RECOVERY_RATE = 50	#amount recovered per interval
@@ -196,7 +196,7 @@ func animatePlayer():
 	if energy > 0:
 		var col_info #collision detection information
 		#determine movement speed from mass carried
-		var speed = ((MAX_MASS - mass)/MAX_MASS * (MAX_SPEED - MIN_SPEED)) + MIN_SPEED
+		var speed = (((MAX_MASS - mass)/MAX_MASS) * MAX_SPEED) + MIN_SPEED
 		
 		if player_state["LForward"] || player_state["RForward"]:
 			col_info = move_and_collide(get_transform().basis.xform(Vector3(0, 0, speed)))	#transform based on local axis
@@ -229,16 +229,24 @@ func animatePlayer():
 		if col_info:
 			#if collider can be knocked back, knock it back
 			if col_info.collider.has_method("knockback"):
-				col_info.collider.knockback(mass + 1000, speed, col_info.normal)
+				col_info.collider.knockback(mass + 1000, speed, col_info.position - self.transform.origin)
 			#if collider can be picked up, pick it up and add to mass
 			if col_info.collider.has_method("pickup") && mass < MAX_MASS:
 				col_info.collider.pickup()
-				mass += 100
+				mass += 20
 
 
 #adds damage taken to total damage taken
 func damage(amount = 10):
 	damaged += amount
+
+
+#knocks character back and does damage
+func knockback(weight, velocity, normal):
+	var force = weight * velocity * 3		#adjust last number to change knock back intensity
+	var knock_vector = Vector3(normal.x * force, 0, normal.z * force)
+	move_and_slide(get_transform().basis.xform(knock_vector))
+	damage(int(force/30))
 
 
 #spawns a bullet
@@ -258,18 +266,18 @@ func _process(delta):
 		damage()
 		energy = 0
 	
-	#recover some energy each second
+	#recover some energy each recover speed interval
 	timeElapsed += delta
 	if timeElapsed >= RECOVERY_SPEED:
 		timeElapsed = 0
-		#stop recovering at max
-		if energy >= MAX_ENERGY:
-			energy = MAX_ENERGY
 		#recover slowly in damaged range
-		elif energy > MAX_ENERGY - damaged:
+		if energy > MAX_ENERGY - damaged:
 			energy += RECOVERY_RATE/5
 		else:
 			energy += RECOVERY_RATE
+	#stop recovering at max
+	if energy >= MAX_ENERGY:
+		energy = MAX_ENERGY
 	
 	#account for gravity
 # warning-ignore:return_value_discarded

@@ -115,6 +115,7 @@ tracks/1/keys = PoolRealArray( 0, 1, 3.72529e-008, 1.86265e-008, 6.24745e-012, 9
 [sub_resource type="Animation" id=6]
 resource_name = "Walking"
 length = 0.833333
+loop = true
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Armature:Jewel")
 tracks/0/interp = 1
@@ -156,7 +157,7 @@ bones/2/enabled = true
 bones/2/bound_children = [  ]
 
 [node name="Cube" type="MeshInstance" parent="Armature"]
-transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0 )
+transform = Transform( -1.74846e-007, 0, -4, 0, 4, 0, 4, 0, -1.74846e-007, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null
 
@@ -169,5 +170,5 @@ anims/Hit = SubResource( 4 )
 anims/Walking = SubResource( 6 )
 
 [node name="BodyCollide" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.108337, 1.17727, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000227377, 1.17727, -0.149275 )
 shape = SubResource( 7 )
