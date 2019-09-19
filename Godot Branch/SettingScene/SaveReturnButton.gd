@@ -5,4 +5,4 @@ func _on_SaveReturnButton_pressed():
 	get_parent().get_node("ControlsMenu").save_keymap()
 	
 	#return to title screen
-	get_tree().change_scene("res://TitleScene/TitleScreen.tscn")
+	get_node("/root/global").gotoScene("res://TitleScene/TitleScreen.tscn")

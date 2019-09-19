@@ -78,5 +78,4 @@ transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 57.60
 
 [node name="OverheadCamera" type="Camera" parent="."]
 transform = Transform( -4.37114e-008, -1, -4.37114e-008, 0, -4.37114e-008, 1, -1, 4.37114e-008, 1.91069e-015, 0, 145, 0 )
-current = true
 far = 150.0
