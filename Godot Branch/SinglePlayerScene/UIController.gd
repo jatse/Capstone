@@ -29,6 +29,11 @@ func _process(delta):
 	if seconds < 10:
 		seconds = "0" + str(seconds)
 	clockDisplay.set_text(str(minutes) + ":" + str(seconds))
+	
+	#end game if time is up
+	if gameClock.get_time_left() <= 0:
+		#viewport > container > stage.end_game
+		get_parent().get_parent().get_parent().end_game()
 
 #sets UI text
 func updateUI(energy, mass, damage):

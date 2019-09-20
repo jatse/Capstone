@@ -16,7 +16,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="TimerLabel" type="Label" parent="VBoxContainer"]
-margin_right = 1024.0
+margin_right = 1440.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = ExtResource( 2 )
@@ -27,14 +27,14 @@ valign = 1
 
 [node name="MeterContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 68.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 1440.0
+margin_bottom = 900.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="EnergyLevel" type="Label" parent="VBoxContainer/MeterContainer"]
-margin_right = 336.0
-margin_bottom = 532.0
+margin_right = 474.0
+margin_bottom = 832.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_fonts/font = ExtResource( 2 )
@@ -42,9 +42,9 @@ custom_colors/font_color = Color( 0, 0.00784314, 1, 1 )
 text = "0"
 
 [node name="DamageGauge" type="Label" parent="VBoxContainer/MeterContainer"]
-margin_left = 344.0
-margin_right = 680.0
-margin_bottom = 532.0
+margin_left = 482.0
+margin_right = 956.0
+margin_bottom = 832.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_fonts/font = ExtResource( 2 )
@@ -52,9 +52,9 @@ custom_colors/font_color = Color( 0, 0.00784314, 1, 1 )
 text = "0"
 
 [node name="MassMeter" type="Label" parent="VBoxContainer/MeterContainer"]
-margin_left = 688.0
-margin_right = 1024.0
-margin_bottom = 532.0
+margin_left = 964.0
+margin_right = 1440.0
+margin_bottom = 832.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_fonts/font = ExtResource( 2 )
@@ -69,10 +69,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="crshairs" type="TextureRect" parent="CenterContainer"]
-margin_left = 491.0
-margin_top = 279.0
-margin_right = 532.0
-margin_bottom = 320.0
+margin_left = 699.0
+margin_top = 429.0
+margin_right = 740.0
+margin_bottom = 470.0
 texture = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]

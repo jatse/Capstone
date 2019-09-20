@@ -5,12 +5,12 @@ var MAX_SPEED = 0.10
 var MIN_SPEED = 0.05
 var mass = 0.0
 var MAX_MASS = 2000.0
-var energy = 2000
+var energy = 1000
 var damaged = 0
-var MAX_ENERGY = 2000
+var MAX_ENERGY = 1000
 var MOVE_COST = 1
 var FIRE_COST = 10
-var RECOVERY_RATE = 50	#amount recovered per interval
+var RECOVERY_RATE = 20	#amount recovered per interval
 var RECOVERY_SPEED = .3 #duration(seconds) between intervals
 var gravity
 var playerUI
@@ -233,12 +233,19 @@ func animatePlayer():
 			#if collider can be picked up, pick it up and add to mass
 			if col_info.collider.has_method("pickup") && mass < MAX_MASS:
 				col_info.collider.pickup()
-				mass += 20
+				mass += randi()%51+50
+				if mass > MAX_MASS:
+					mass = MAX_MASS
 
 
 #adds damage taken to total damage taken
 func damage(amount = 10):
 	damaged += amount
+	#lose cargo when damaged
+	mass -= int(amount)
+	#check min mass
+	if mass < 0:
+		mass = 0
 
 
 #knocks character back and does damage

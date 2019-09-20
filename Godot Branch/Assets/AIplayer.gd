@@ -156,9 +156,9 @@ func animatePlayer():
 	if player_state["Right"]:
 		col_info = move_and_collide(get_transform().basis.xform(Vector3(-speed*2, 0, 0)))
 	if player_state["SteerLeft"]:
-		rotate_y(speed/2.5)
+		rotate_y(speed)
 	if player_state["SteerRight"]:
-		rotate_y(-speed/2.5)
+		rotate_y(-speed)
 		
 	#COLLISION DETECTION
 	if col_info:
@@ -168,12 +168,18 @@ func animatePlayer():
 		#if collider can be picked up, pick it up and add to mass
 		if col_info.collider.has_method("pickup") && mass < MAX_MASS:
 			col_info.collider.pickup()
-			mass += 20
+			mass += randi()%101+100
+			if mass > MAX_MASS:
+					mass = MAX_MASS
 
 
 #adds damage taken to total damage taken
 func damage(amount = 10):
 	damaged += amount
+	#lose cargo when damaged
+	mass -= int(amount)
+	if mass < 0:
+		mass = 0
 	AI_state = "danger"
 
 

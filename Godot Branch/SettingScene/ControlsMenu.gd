@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends Control
 
 #The default key map
 var default_controls = {
@@ -11,12 +11,35 @@ var default_controls = {
 	"RightStrafeKey" : KEY_L,
 	"RightFireKey" : KEY_J
 }
+
 #The key map for this game instance
 var controls = {}
 
+#onscreen button variables
+var leftForwardKey
+var leftBackwardKey
+var leftStrafeKey
+var leftFireKey
+var rightForwardKey
+var rightBackwardKey
+var rightStrafeKey
+var rightFireKey
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	get_node("LeftForwardKey/ChangeKey").grab_focus()
+	#map onscreen keys to variables
+	leftForwardKey = get_node("HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftForwardKey/AssignedKey")
+	leftBackwardKey = get_node("HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftBackwardKey/AssignedKey")
+	leftStrafeKey = get_node("HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftStrafeKey/AssignedKey")
+	leftFireKey = get_node("HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftFireKey/AssignedKey")
+	rightForwardKey = get_node("HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightForwardKey/AssignedKey")
+	rightBackwardKey = get_node("HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightBackwardKey/AssignedKey")
+	rightStrafeKey = get_node("HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightStrafeKey/AssignedKey")
+	rightFireKey = get_node("HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightFireKey/AssignedKey")
+	
+	#start selection on top of list
+	leftForwardKey.get_parent().get_child(0).grab_focus()
 	
 	#If config file not exist, make default file
 	var configFile = File.new()
@@ -41,18 +64,18 @@ func _ready():
 #Refreshes UI labels for current keymap.
 #Call this function when keymap has been edited.
 func update_keymap_UI():
-	get_node("LeftForwardKey/AssignedKey").text = get_input_name(controls["LeftForwardKey"])
-	get_node("LeftBackwardKey/AssignedKey").text = get_input_name(controls["LeftBackwardKey"])
-	get_node("LeftStrafeKey/AssignedKey").text = get_input_name(controls["LeftStrafeKey"])
-	get_node("LeftFireKey/AssignedKey").text = get_input_name(controls["LeftFireKey"])
+	leftForwardKey.text = get_input_name(controls["LeftForwardKey"])
+	leftBackwardKey.text = get_input_name(controls["LeftBackwardKey"])
+	leftStrafeKey.text = get_input_name(controls["LeftStrafeKey"])
+	leftFireKey.text = get_input_name(controls["LeftFireKey"])
 	
-	get_node("RightForwardKey/AssignedKey").text = get_input_name(controls["RightForwardKey"])
-	get_node("RightBackwardKey/AssignedKey").text = get_input_name(controls["RightBackwardKey"])
-	get_node("RightStrafeKey/AssignedKey").text = get_input_name(controls["RightStrafeKey"])
-	get_node("RightFireKey/AssignedKey").text = get_input_name(controls["RightFireKey"])
+	rightForwardKey.text = get_input_name(controls["RightForwardKey"])
+	rightBackwardKey.text = get_input_name(controls["RightBackwardKey"])
+	rightStrafeKey.text = get_input_name(controls["RightStrafeKey"])
+	rightFireKey.text = get_input_name(controls["RightFireKey"])
 	
 	#update player
-	get_node("../../../../../../../3DDemo/Viewport/Player").load_input_map()
+	get_node("../3DDemo/Viewport/Player").load_input_map()
 
 #Sets the current controls to default controls
 func set_keys_to_default():

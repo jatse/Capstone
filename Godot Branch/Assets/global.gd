@@ -1,8 +1,9 @@
 extends Node
 
-var loader
-var root
+var loader	#loading object. null when not loading
+var root	#project root
 var loading_screen = preload("res://LoadingScreen.tscn")
+var scores = [0, 0, 0, 0] 	#hold scores at end of the game
 
 func _ready():
 	root = get_tree().get_root()

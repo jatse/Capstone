@@ -2,9 +2,11 @@ extends Button
 
 var toggledState = false
 var originalText = ""
+var sceneRoot
 
 #Preserve original button text
 func _ready():
+	sceneRoot = get_parent().get_parent().get_parent().get_parent().get_parent().get_parent()
 	originalText = self.text
 
 #Prime for key input
@@ -26,7 +28,8 @@ func _input(event):
 		#if keyboard event, register, and untoggle
 		if event is InputEventKey:
 			var action = self.get_parent().name
-			self.get_parent().get_parent().map_key_to_action(event.scancode, action)
+			
+			sceneRoot.map_key_to_action(event.scancode, action)
 			toggledState = false
 			self.text = originalText
 			self.pressed = false
@@ -34,7 +37,7 @@ func _input(event):
 		#if joypad button event, register, and untoggle
 		if event is InputEventJoypadButton:
 			var action = self.get_parent().name
-			self.get_parent().get_parent().map_key_to_action(event.button_index, action)
+			sceneRoot.map_key_to_action(event.button_index, action)
 			toggledState = false
 			self.text = originalText
 			self.pressed = false

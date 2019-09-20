@@ -32,7 +32,7 @@ func _ready():
 
 #imports controls from ControlsMenu.gd
 func load_input_map():
-	controls = get_node("../../../2DMenu/Viewport/Control/HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu").controls.duplicate()
+	controls = get_node("../../../Control").controls.duplicate()
 
 
 # Called with each input event
