@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Assets/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Assets/PlayerUV.material" type="Material" id=2]
 [ext_resource path="res://Assets/sounds/motorHum.tres" type="AudioStream" id=3]
+[ext_resource path="res://Assets/sounds/warning_sound.tres" type="AudioStream" id=4]
+[ext_resource path="res://Assets/sounds/pickup_gem.wav" type="AudioStream" id=5]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "player"
@@ -1024,3 +1026,25 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.378663, 0.802016, 0.856273 
 [node name="EngineSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.507717, 0 )
 stream = ExtResource( 3 )
+unit_db = -10.0
+
+[node name="LeftBlasterSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.407228, 0.796968, 0.855139 )
+unit_db = -20.0
+
+[node name="RightBlasterSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.378095, 0.796968, 0.855139 )
+unit_db = -20.0
+
+[node name="OuterSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.725708, 0.292542 )
+
+[node name="InternalSiren" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18469, 0 )
+stream = ExtResource( 4 )
+unit_db = -10.0
+
+[node name="PickupSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.590271, -0.284454 )
+stream = ExtResource( 5 )
+unit_db = -10.0

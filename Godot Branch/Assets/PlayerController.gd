@@ -45,13 +45,25 @@ var default_controls = {
 	"RightFireKey" : KEY_J
 }
 var PLAYER_BULLET = preload("res://Assets/PlayerBullet.tscn")
+
+#audio variables
 var engine
+var leftblaster
+var rightblaster
+var outer
+var pickup
+var emergency
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#get character variables
 	animation_player = get_node("AnimationPlayer")
 	engine = get_node("EngineSound")
+	leftblaster = get_node("LeftBlasterSound")
+	rightblaster = get_node("RightBlasterSound")
+	outer = get_node("OuterSound")
+	pickup = get_node("PickupSound")
+	emergency = get_node("InternalSiren")
 	
 	#used to set idle state
 	player_null_state = player_state.duplicate()
@@ -163,12 +175,14 @@ func animatePlayer():
 			spawnProjectile($LeftSpawnBullet.global_transform)
 			energy -= FIRE_COST
 			player_state["FireLeft"] = false
+			playAudio(leftblaster)
 		elif player_state["FireRight"] && energy > FIRE_COST:
 			animation_player.play("FireRight")
 			player_action = "Firing"
 			spawnProjectile($RightSpawnBullet.global_transform)
 			energy -= FIRE_COST
 			player_state["FireRight"] = false
+			playAudio(rightblaster)
 			
 		#Handle movement animations
 		elif player_state["LForward"] || player_state["RForward"]:
@@ -240,6 +254,7 @@ func animatePlayer():
 			#if collider can be picked up, pick it up and add to mass
 			if col_info.collider.has_method("pickup") && mass < MAX_MASS:
 				col_info.collider.pickup()
+				pickup.play()
 				mass += randi()%51+50
 				if mass > MAX_MASS:
 					mass = MAX_MASS
@@ -257,6 +272,7 @@ func damage(amount = 10):
 
 #knocks character back and does damage
 func knockback(weight, velocity, normal):
+	playAudio(outer)
 	var force = weight * velocity * 3		#adjust last number to change knock back intensity
 	var knock_vector = Vector3(normal.x * force, 0, normal.z * force)
 	move_and_slide(get_transform().basis.xform(knock_vector))
@@ -268,6 +284,28 @@ func spawnProjectile(proj_trans):
 	var projectile = PLAYER_BULLET.instance()
 	projectile.transform = proj_trans
 	get_parent().add_child(projectile)
+
+
+func playAudio(audioPlayer):
+	#blaster sounds
+	if audioPlayer == leftblaster || audioPlayer == rightblaster:
+		#load random track
+		match randi()%2:
+			0:
+				audioPlayer.stream = load("res://Assets/sounds/fire_laser.wav")
+			1:
+				audioPlayer.stream = load("res://Assets/sounds/fire_laser2.wav")
+		audioPlayer.play()
+		
+	#outer noises
+	if audioPlayer == outer:
+		#load random track
+		match randi()%2:
+			0:
+				audioPlayer.stream = load("res://Assets/sounds/player_crash.wav")
+			1:
+				audioPlayer.stream = load("res://Assets/sounds/player_crash2.wav")
+	audioPlayer.play()
 
 
 #Called each frame
@@ -292,6 +330,12 @@ func _process(delta):
 	#stop recovering at max
 	if energy >= MAX_ENERGY:
 		energy = MAX_ENERGY
+		
+	#play warning sound if enevery below 100
+	if energy < 100 && !emergency.is_playing():
+		emergency.play()
+	elif energy > 100 && emergency.is_playing():
+		emergency.stop()
 	
 	#account for gravity
 # warning-ignore:return_value_discarded

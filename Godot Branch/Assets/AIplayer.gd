@@ -30,10 +30,18 @@ var player_state = {			#indicates which actions are active
 		"SteerRight" : false}
 var PLAYER_BULLET = preload("res://Assets/PlayerBullet.tscn")
 
+#audio variables
+var leftblaster
+var rightblaster
+var outer
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#get animator controller
+	#get character variables
 	animation_player = get_node("AnimationPlayer")
+	leftblaster = get_node("LeftBlasterSound")
+	rightblaster = get_node("RightBlasterSound")
+	outer = get_node("OuterSound")
 	
 	#used to set idle state
 	player_null_state = player_state.duplicate()
@@ -112,11 +120,13 @@ func animatePlayer():
 			animation_player.play("FireLeft")
 			player_action = "Firing"
 			spawnProjectile($LeftSpawnBullet.global_transform)
+			playAudio(leftblaster)
 			player_state["FireLeft"] = false
 		elif player_state["FireRight"]:
 			animation_player.play("FireRight")
 			player_action = "Firing"
 			spawnProjectile($RightSpawnBullet.global_transform)
+			playAudio(rightblaster)
 			player_state["FireRight"] = false
 			
 		#Handle movement animations
@@ -192,10 +202,33 @@ func spawnProjectile(proj_trans):
 
 #knocks character back and does damage
 func knockback(weight, velocity, normal):
+	playAudio(outer)
 	var force = weight * velocity * 3		#adjust last number to change knock back intensity
 	var knock_vector = Vector3(normal.x * force, 0, normal.z * force)
 	move_and_slide(get_transform().basis.xform(knock_vector))
 	damage(int(force/30))
+
+
+func playAudio(audioPlayer):
+	#blaster sounds
+	if audioPlayer == leftblaster || audioPlayer == rightblaster:
+		#load random track
+		match randi()%2:
+			0:
+				audioPlayer.stream = load("res://Assets/sounds/fire_laser.wav")
+			1:
+				audioPlayer.stream = load("res://Assets/sounds/fire_laser2.wav")
+		audioPlayer.play()
+		
+	#outer noises
+	if audioPlayer == outer:
+		#load random track
+		match randi()%2:
+			0:
+				audioPlayer.stream = load("res://Assets/sounds/player_crash.wav")
+			1:
+				audioPlayer.stream = load("res://Assets/sounds/player_crash2.wav")
+	audioPlayer.play()
 
 
 #called each frame on physics step

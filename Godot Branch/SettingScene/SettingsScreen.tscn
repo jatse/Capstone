@@ -916,7 +916,6 @@ margin_bottom = 900.0
 rect_min_size = Vector2( 1440, 900 )
 
 [node name="Spatial" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="test_map" parent="Spatial" instance=ExtResource( 2 )]
 
@@ -1040,7 +1039,7 @@ transform = Transform( -1, 6.54603e-008, -5.79457e-008, 1.19019e-008, 0.75859, 0
 projection = 1
 current = true
 fov = 62.7728
-size = 4.0
+size = 3.58243
 
 [node name="DirectionalLight" type="DirectionalLight" parent="Player"]
 transform = Transform( 0.337627, 0.519235, 0.785113, -0.295484, -0.733463, 0.612145, 0.893699, -0.438665, -0.0942113, 2.43143, 2.90405, 0.554257 )

@@ -172,3 +172,6 @@ anims/Walking = SubResource( 6 )
 [node name="BodyCollide" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000227377, 1.17727, -0.149275 )
 shape = SubResource( 7 )
+
+[node name="voiceSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4765, 0 )

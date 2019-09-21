@@ -85,3 +85,4 @@ func show_winner():
 			
 	#make accept button visible
 	get_node("VBoxContainer/ControlPanel/CenterContainer/AcceptButton").visible = true
+	get_node("VBoxContainer/ControlPanel/CenterContainer/AcceptButton").grab_focus()
