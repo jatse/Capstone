@@ -10,7 +10,7 @@ var damaged = 0
 var MAX_ENERGY = 1000
 var MOVE_COST = 1
 var FIRE_COST = 10
-var RECOVERY_RATE = 20	#amount recovered per interval
+var RECOVERY_RATE = 30	#amount recovered per interval
 var RECOVERY_SPEED = .3 #duration(seconds) between intervals
 var gravity
 var playerUI
@@ -45,11 +45,13 @@ var default_controls = {
 	"RightFireKey" : KEY_J
 }
 var PLAYER_BULLET = preload("res://Assets/PlayerBullet.tscn")
+var engine
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#get animator controller
+	#get character variables
 	animation_player = get_node("AnimationPlayer")
+	engine = get_node("EngineSound")
 	
 	#used to set idle state
 	player_null_state = player_state.duplicate()
@@ -173,23 +175,28 @@ func animatePlayer():
 			if player_action != "MoveForward":		#checks to see if animation already playing
 				animation_player.play("MoveForward")
 				player_action = "MoveForward"
+				engine.play()
 		elif player_state["LBackward"] || player_state["RBackward"]:
 			if player_action != "MoveBackward":
 				animation_player.play("MoveBackward")
 				player_action = "MoveBackward"
+				engine.play()
 		elif player_state["Left"]:
 			if player_action != "StrafeLeft":
 				animation_player.play("StrafeLeft")
 				player_action = "StrafeLeft"
+				engine.play()
 		elif player_state["Right"]:
 			if player_action != "StrafeRight":
 				animation_player.play("StrafeRight")
 				player_action = "StrafeRight"
+				engine.play()
 			
 		#If no action being taken, idle
 		elif player_null_state.values() == player_state.values(): 
 			animation_player.play("Idle")
 			player_action = "Idle"
+			engine.stop()
 	
 	#PHYSICAL MOVEMENT
 	#move only with enough energy, can move with 0 energy but takes damage.

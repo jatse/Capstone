@@ -25,6 +25,7 @@ var rightBackwardKey
 var rightStrafeKey
 var rightFireKey
 
+onready var soundPlayer = get_node("AudioStreamPlayer")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -75,7 +76,7 @@ func update_keymap_UI():
 	rightFireKey.text = get_input_name(controls["RightFireKey"])
 	
 	#update player
-	get_node("../3DDemo/Viewport/Player").load_input_map()
+	get_node("../../../Player").load_input_map()
 
 #Sets the current controls to default controls
 func set_keys_to_default():
@@ -100,3 +101,6 @@ func save_keymap():
 	if configFile.open("user://controls.cfg", File.WRITE) == OK:
 		configFile.store_line(to_json(controls))
 		configFile.close()
+
+func playAudio():
+	soundPlayer.play()

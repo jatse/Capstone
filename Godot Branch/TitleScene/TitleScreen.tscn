@@ -68,6 +68,9 @@ margin_bottom = 172.0
 text = "Exit Game"
 align = 0
 
+[node name="MenuSounds" type="AudioStreamPlayer" parent="VBoxContainer/HBoxContainer/Menu"]
+volume_db = -10.0
+
 [node name="Right Space" type="Control" parent="VBoxContainer/HBoxContainer"]
 margin_left = 280.0
 margin_right = 1280.0

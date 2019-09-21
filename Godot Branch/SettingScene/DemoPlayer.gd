@@ -16,12 +16,18 @@ var player_state = {			#indicates which keys are down
 		"FireRight" : false,
 		"SteerLeft" : false,
 		"SteerRight" : false}
+var engine
+var leftBlaster
+var rightBlaster
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#get animator controller
+	#get character variables
 	animation_player = get_node("AnimationPlayer")
+	engine = get_node("EngineSound")
+	leftBlaster = get_node("LeftBlaster")
+	rightBlaster = get_node("RightBlaster")
 	
 	#used to set idle state
 	player_null_state = player_state.duplicate()
@@ -32,7 +38,7 @@ func _ready():
 
 #imports controls from ControlsMenu.gd
 func load_input_map():
-	controls = get_node("../../../Control").controls.duplicate()
+	controls = get_node("../ViewportContainer/Viewport/Control").controls.duplicate()
 
 
 # Called with each input event
@@ -118,10 +124,12 @@ func animatePlayer():
 		if player_state["FireLeft"]:
 			animation_player.play("FireLeft")
 			player_action = "Firing"
+			leftBlaster.play()
 			player_state["FireLeft"] = false
 		elif player_state["FireRight"]:
 			animation_player.play("FireRight")
 			player_action = "Firing"
+			rightBlaster.play()
 			player_state["FireRight"] = false
 			
 		#Handle movement animations
@@ -129,23 +137,28 @@ func animatePlayer():
 			if player_action != "MoveForward":
 				animation_player.play("MoveForward")
 				player_action = "MoveForward"
+				engine.play()
 		elif player_state["LBackward"] || player_state["RBackward"]:
 			if player_action != "MoveBackward":
 				animation_player.play("MoveBackward")
 				player_action = "MoveBackward"
+				engine.play()
 		elif player_state["Left"]:
 			if player_action != "StrafeLeft":
 				animation_player.play("StrafeLeft")
 				player_action = "StrafeLeft"
+				engine.play()
 		elif player_state["Right"]:
 			if player_action != "StrafeRight":
 				animation_player.play("StrafeRight")
 				player_action = "StrafeRight"
+				engine.play()
 			
 		#If not moving, idle
 		elif player_null_state.values() == player_state.values(): 
 			animation_player.play("Idle")
 			player_action = "Idle"
+			engine.stop()
 	
 	#MOVEMENT
 	if player_state["LForward"] || player_state["RForward"]:

@@ -1,9 +1,11 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://SettingScene/Settings.tscn" type="PackedScene" id=1]
 [ext_resource path="res://SettingScene/test_map.tscn" type="PackedScene" id=2]
 [ext_resource path="res://SettingScene/DemoPlayer.gd" type="Script" id=3]
 [ext_resource path="res://Assets/PlayerUV.material" type="Material" id=4]
+[ext_resource path="res://Assets/sounds/motorHum.tres" type="AudioStream" id=5]
+[ext_resource path="res://Assets/sounds/fire_laser2.wav" type="AudioStream" id=6]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "player"
@@ -892,56 +894,36 @@ extents = Vector3( 0.506262, 0.121445, 0.179321 )
 radius = 0.143648
 height = 0.357548
 
-[node name="Node2D" type="Node2D"]
+[node name="Spatial" type="Spatial"]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 1440.0
-margin_bottom = 897.0
-rect_min_size = Vector2( 1440, 900 )
-custom_constants/separation = 0
 
-[node name="Control" parent="HBoxContainer" instance=ExtResource( 1 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 480.0
-margin_bottom = 900.0
-rect_min_size = Vector2( 480, 900 )
-
-[node name="3DDemo" type="ViewportContainer" parent="HBoxContainer"]
-margin_left = 480.0
-margin_right = 1440.0
-margin_bottom = 900.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-stretch = true
-
-[node name="Viewport" type="Viewport" parent="HBoxContainer/3DDemo"]
-size = Vector2( 960, 900 )
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1440, 900 )
+transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
 
-[node name="Spatial" type="Spatial" parent="HBoxContainer/3DDemo/Viewport"]
+[node name="Camera2D" type="Camera2D" parent="ViewportContainer/Viewport"]
 
-[node name="test_map" parent="HBoxContainer/3DDemo/Viewport/Spatial" instance=ExtResource( 2 )]
+[node name="Control" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1440.0
+margin_bottom = 900.0
+rect_min_size = Vector2( 1440, 900 )
 
-[node name="DirectionalLight" type="DirectionalLight" parent="HBoxContainer/3DDemo/Viewport/Spatial"]
-transform = Transform( 0.337627, 0.519235, 0.785114, -0.295484, -0.733463, 0.612145, 0.893699, -0.438665, -0.0942115, 2.43143, 2.90405, 0.554257 )
-light_color = Color( 1, 0, 0, 1 )
+[node name="Spatial" type="Spatial" parent="."]
+editor/display_folded = true
 
-[node name="DirectionalLight2" type="DirectionalLight" parent="HBoxContainer/3DDemo/Viewport/Spatial"]
-transform = Transform( -0.700284, -0.269561, -0.661013, -0.295484, -0.733463, 0.612145, -0.649839, 0.623994, 0.433982, -1.84205, 2.90405, 1.86525 )
-light_color = Color( 0, 1, 0.458824, 1 )
+[node name="test_map" parent="Spatial" instance=ExtResource( 2 )]
 
-[node name="DirectionalLight3" type="DirectionalLight" parent="HBoxContainer/3DDemo/Viewport/Spatial"]
-transform = Transform( -0.999835, -0.017482, 0.00488461, 0.0051647, -0.0160125, 0.999858, -0.0174013, 0.999719, 0.0161001, 0.15907, 5.04101, 0.206151 )
-shadow_enabled = true
-
-[node name="Player" type="KinematicBody" parent="HBoxContainer/3DDemo/Viewport"]
+[node name="Player" type="KinematicBody" parent="."]
 script = ExtResource( 3 )
 
-[node name="Armature" type="Skeleton" parent="HBoxContainer/3DDemo/Viewport/Player"]
+[node name="Armature" type="Skeleton" parent="Player"]
 bones/0/name = "body"
 bones/0/parent = -1
 bones/0/rest = Transform( 1, -3.28418e-017, 5.05723e-017, 5.05723e-017, 0.913543, -0.406742, -3.28418e-017, 0.406742, 0.913543, 3.30872e-024, 0.633232, -1.49012e-008 )
@@ -1028,11 +1010,11 @@ bones/16/rest = Transform( 0.999375, 0.0249861, 0.0249938, -0.0249939, 0.999687,
 bones/16/enabled = true
 bones/16/bound_children = [  ]
 
-[node name="player" type="MeshInstance" parent="HBoxContainer/3DDemo/Viewport/Player/Armature"]
+[node name="player" type="MeshInstance" parent="Player/Armature"]
 mesh = SubResource( 1 )
 material/0 = ExtResource( 4 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/3DDemo/Viewport/Player"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
 anims/FireLeft = SubResource( 2 )
 anims/FireRight = SubResource( 3 )
 anims/Idle = SubResource( 4 )
@@ -1041,19 +1023,45 @@ anims/MoveForward = SubResource( 6 )
 anims/StrafeLeft = SubResource( 7 )
 anims/StrafeRight = SubResource( 8 )
 
-[node name="body_collide" type="CollisionShape" parent="HBoxContainer/3DDemo/Viewport/Player"]
+[node name="body_collide" type="CollisionShape" parent="Player"]
 transform = Transform( 1, 0, 0, 0, -0.430657, -0.902516, 0, 0.902516, -0.430657, 0, 0.841034, 0.0665462 )
 shape = SubResource( 9 )
 
-[node name="feet_collide" type="CollisionShape" parent="HBoxContainer/3DDemo/Viewport/Player"]
+[node name="feet_collide" type="CollisionShape" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.126642, 0.0801798 )
 shape = SubResource( 10 )
 
-[node name="tank_collide" type="CollisionShape" parent="HBoxContainer/3DDemo/Viewport/Player"]
+[node name="tank_collide" type="CollisionShape" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 0.959699, -0.281029, 0, 0.281029, 0.959699, 0, 0.860334, -0.251801 )
 shape = SubResource( 11 )
 
-[node name="Camera" type="Camera" parent="HBoxContainer/3DDemo/Viewport/Player"]
-transform = Transform( -1, 6.54602e-008, -5.79457e-008, 0, 0.662821, 0.748778, 8.74228e-008, 0.748778, -0.662821, -1.67639e-007, 2.75724, -1.91756 )
+[node name="Camera" type="Camera" parent="Player"]
+transform = Transform( -1, 6.54603e-008, -5.79457e-008, 1.19019e-008, 0.75859, 0.651569, 8.66088e-008, 0.651569, -0.75859, 1.08389, 2.47306, -1.91756 )
+projection = 1
 current = true
 fov = 62.7728
+size = 4.0
+
+[node name="DirectionalLight" type="DirectionalLight" parent="Player"]
+transform = Transform( 0.337627, 0.519235, 0.785113, -0.295484, -0.733463, 0.612145, 0.893699, -0.438665, -0.0942113, 2.43143, 2.90405, 0.554257 )
+light_color = Color( 1, 0, 0, 1 )
+
+[node name="DirectionalLight2" type="DirectionalLight" parent="Player"]
+transform = Transform( -0.700284, -0.269561, -0.661014, -0.295484, -0.733463, 0.612145, -0.649839, 0.623994, 0.433982, -1.84205, 2.90405, 1.86525 )
+light_color = Color( 0, 1, 0.458824, 1 )
+
+[node name="DirectionalLight3" type="DirectionalLight" parent="Player"]
+transform = Transform( -0.999835, -0.017482, 0.00488461, 0.0051647, -0.0160125, 0.999858, -0.0174013, 0.999719, 0.0161001, 0.15907, 5.04101, 0.206151 )
+shadow_enabled = true
+
+[node name="EngineSound" type="AudioStreamPlayer3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.08564, 0.360739, -1.2012 )
+stream = ExtResource( 5 )
+
+[node name="LeftBlaster" type="AudioStreamPlayer3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.47487, 0.817776, 0.761353 )
+stream = ExtResource( 6 )
+
+[node name="RightBlaster" type="AudioStreamPlayer3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68964, 0.817776, 0.757921 )
+stream = ExtResource( 6 )

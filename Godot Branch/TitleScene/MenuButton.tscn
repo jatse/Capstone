@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Assets/Trajan_32.tres" type="DynamicFont" id=1]
+[ext_resource path="res://TitleScene/MenuButton.gd" type="Script" id=2]
 
 [node name="Button" type="Button"]
 margin_left = 378.0
@@ -12,3 +13,5 @@ custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 shortcut_in_tooltip = false
 text = "Label"
 flat = true
+script = ExtResource( 2 )
+[connection signal="focus_entered" from="." to="." method="_on_Button_focus_entered"]
