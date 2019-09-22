@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/crshairs.png-2dfc317aac6e880dbc6d1550f9c6b00d.stex"
+path="res://.import/damage.png-3fa37355faf4fe3a18e38d32ee875c5b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/crshairs.png"
-dest_files=[ "res://.import/crshairs.png-2dfc317aac6e880dbc6d1550f9c6b00d.stex" ]
+source_file="res://Assets/damage.png"
+dest_files=[ "res://.import/damage.png-3fa37355faf4fe3a18e38d32ee875c5b.stex" ]
 
 [params]
 

@@ -3,8 +3,6 @@
 [ext_resource path="res://Assets/DINENGSCHRIFTSTD.OTF" type="DynamicFontData" id=1]
 
 [resource]
-size = 48
-outline_size = 5
-outline_color = Color( 0, 0, 0, 0.705882 )
+size = 72
 extra_spacing_char = 8
 font_data = ExtResource( 1 )

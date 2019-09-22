@@ -262,6 +262,7 @@ func animatePlayer():
 
 #adds damage taken to total damage taken
 func damage(amount = 10):
+	playerUI.flicker()
 	damaged += amount
 	#lose cargo when damaged
 	mass -= int(amount)
@@ -342,4 +343,4 @@ func _process(delta):
 	move_and_collide(get_transform().basis.xform(Vector3(0, -gravity, 0)))
 	
 	#update UI
-	playerUI.updateUI(energy, mass, damaged)
+	playerUI.updateUI(energy, mass)
