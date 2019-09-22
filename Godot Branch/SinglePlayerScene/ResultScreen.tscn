@@ -34,34 +34,34 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="HeaderContainer" type="CenterContainer" parent="VBoxContainer"]
-margin_right = 1400.0
+margin_right = 1240.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 0, 80 )
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/HeaderContainer"]
-margin_left = 661.0
+margin_left = 581.0
 margin_top = 27.0
-margin_right = 738.0
+margin_right = 658.0
 margin_bottom = 52.0
 text = "Results"
 
 [node name="PlayerStats" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 88.0
-margin_right = 1400.0
-margin_bottom = 772.0
+margin_right = 1240.0
+margin_bottom = 592.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Player1" type="HBoxContainer" parent="VBoxContainer/PlayerStats"]
-margin_right = 1400.0
-margin_bottom = 165.0
+margin_right = 1240.0
+margin_bottom = 120.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="placement" type="Label" parent="VBoxContainer/PlayerStats/Player1"]
 margin_right = 80.0
-margin_bottom = 165.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 80, 0 )
 size_flags_vertical = 3
 text = " "
@@ -71,7 +71,7 @@ valign = 1
 [node name="Label" type="Label" parent="VBoxContainer/PlayerStats/Player1"]
 margin_left = 88.0
 margin_right = 208.0
-margin_bottom = 165.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_vertical = 3
 text = "Player 1"
@@ -79,8 +79,8 @@ valign = 1
 
 [node name="P1Bar" type="ProgressBar" parent="VBoxContainer/PlayerStats/Player1"]
 margin_left = 216.0
-margin_right = 1400.0
-margin_bottom = 165.0
+margin_right = 1240.0
+margin_bottom = 120.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/fg = SubResource( 1 )
@@ -90,15 +90,15 @@ max_value = 2000.0
 value = 2000.0
 
 [node name="Player2" type="HBoxContainer" parent="VBoxContainer/PlayerStats"]
-margin_top = 173.0
-margin_right = 1400.0
-margin_bottom = 338.0
+margin_top = 128.0
+margin_right = 1240.0
+margin_bottom = 248.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="placement" type="Label" parent="VBoxContainer/PlayerStats/Player2"]
 margin_right = 80.0
-margin_bottom = 165.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 80, 0 )
 size_flags_vertical = 3
 text = " "
@@ -108,7 +108,7 @@ valign = 1
 [node name="Label2" type="Label" parent="VBoxContainer/PlayerStats/Player2"]
 margin_left = 88.0
 margin_right = 208.0
-margin_bottom = 165.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_vertical = 3
 text = "Player 2"
@@ -116,8 +116,8 @@ valign = 1
 
 [node name="P2Bar" type="ProgressBar" parent="VBoxContainer/PlayerStats/Player2"]
 margin_left = 216.0
-margin_right = 1400.0
-margin_bottom = 165.0
+margin_right = 1240.0
+margin_bottom = 120.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/fg = SubResource( 3 )
@@ -127,15 +127,15 @@ max_value = 2000.0
 value = 2000.0
 
 [node name="Player3" type="HBoxContainer" parent="VBoxContainer/PlayerStats"]
-margin_top = 346.0
-margin_right = 1400.0
-margin_bottom = 511.0
+margin_top = 256.0
+margin_right = 1240.0
+margin_bottom = 376.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="placement" type="Label" parent="VBoxContainer/PlayerStats/Player3"]
 margin_right = 80.0
-margin_bottom = 165.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 80, 0 )
 size_flags_vertical = 3
 text = " "
@@ -145,7 +145,7 @@ valign = 1
 [node name="Label3" type="Label" parent="VBoxContainer/PlayerStats/Player3"]
 margin_left = 88.0
 margin_right = 208.0
-margin_bottom = 165.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_vertical = 3
 text = "Player 3"
@@ -153,8 +153,8 @@ valign = 1
 
 [node name="P3Bar" type="ProgressBar" parent="VBoxContainer/PlayerStats/Player3"]
 margin_left = 216.0
-margin_right = 1400.0
-margin_bottom = 165.0
+margin_right = 1240.0
+margin_bottom = 120.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/fg = SubResource( 4 )
@@ -164,15 +164,15 @@ max_value = 2000.0
 value = 2000.0
 
 [node name="Player4" type="HBoxContainer" parent="VBoxContainer/PlayerStats"]
-margin_top = 519.0
-margin_right = 1400.0
-margin_bottom = 684.0
+margin_top = 384.0
+margin_right = 1240.0
+margin_bottom = 504.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="placement" type="Label" parent="VBoxContainer/PlayerStats/Player4"]
 margin_right = 80.0
-margin_bottom = 165.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 80, 0 )
 size_flags_vertical = 3
 text = " "
@@ -182,7 +182,7 @@ valign = 1
 [node name="Label4" type="Label" parent="VBoxContainer/PlayerStats/Player4"]
 margin_left = 88.0
 margin_right = 208.0
-margin_bottom = 165.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_vertical = 3
 text = "Player 4"
@@ -190,8 +190,8 @@ valign = 1
 
 [node name="P4Bar" type="ProgressBar" parent="VBoxContainer/PlayerStats/Player4"]
 margin_left = 216.0
-margin_right = 1400.0
-margin_bottom = 165.0
+margin_right = 1240.0
+margin_bottom = 120.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/fg = SubResource( 5 )
@@ -201,23 +201,23 @@ max_value = 2000.0
 value = 2000.0
 
 [node name="ControlPanel" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 780.0
-margin_right = 1400.0
-margin_bottom = 860.0
+margin_top = 600.0
+margin_right = 1240.0
+margin_bottom = 680.0
 rect_min_size = Vector2( 0, 80 )
 size_flags_horizontal = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/ControlPanel"]
-margin_right = 1400.0
+margin_right = 1240.0
 margin_bottom = 80.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="AcceptButton" type="Button" parent="VBoxContainer/ControlPanel/CenterContainer"]
 visible = false
-margin_left = 580.0
+margin_left = 500.0
 margin_top = 21.0
-margin_right = 820.0
+margin_right = 740.0
 margin_bottom = 58.0
 rect_min_size = Vector2( 240, 0 )
 size_flags_horizontal = 3

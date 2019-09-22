@@ -899,9 +899,12 @@ height = 0.357548
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+rect_min_size = Vector2( 1280, 720 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
-size = Vector2( 1440, 900 )
+size = Vector2( 1280, 720 )
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
@@ -911,9 +914,9 @@ render_target_update_mode = 3
 [node name="Control" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 1440.0
-margin_bottom = 900.0
-rect_min_size = Vector2( 1440, 900 )
+margin_right = 1280.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 1280, 720 )
 
 [node name="Spatial" type="Spatial" parent="."]
 
