@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Capstone"
+config/name="Dark Matter Run"
 run/main_scene="res://TitleScene/TitleScreen.tscn"
 config/icon="res://icon.png"
 
@@ -23,9 +23,15 @@ config/icon="res://icon.png"
 
 global="*res://Assets/global.gd"
 
+[compression]
+
+formats/zlib/compression_level=9
+formats/gzip/compression_level=9
+
 [debug]
 
 settings/fps/force_fps=60
+settings/stdout/print_fps=true
 
 [display]
 
