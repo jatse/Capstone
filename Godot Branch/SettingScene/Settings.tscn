@@ -21,7 +21,7 @@ size_flags_vertical = 3
 
 [node name="MenuPanel" type="Panel" parent="HBoxContainer"]
 margin_right = 480.0
-margin_bottom = 900.0
+margin_bottom = 720.0
 rect_min_size = Vector2( 480, 0 )
 focus_mode = 2
 size_flags_horizontal = 0
@@ -41,7 +41,7 @@ custom_constants/separation = 10
 
 [node name="ControlsMenu" type="VBoxContainer" parent="HBoxContainer/MenuPanel/SettingsMenu"]
 margin_right = 440.0
-margin_bottom = 742.0
+margin_bottom = 562.0
 focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -54,91 +54,120 @@ text = "Live Controls Setup"
 align = 1
 
 [node name="LeftForwardKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu" instance=ExtResource( 2 )]
+margin_bottom = 89.0
 
 [node name="ChangeKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftForwardKey" index="0"]
+margin_bottom = 54.0
 text = "Left Drive"
 
+[node name="AssignedKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftForwardKey" index="1"]
+margin_bottom = 54.0
+
 [node name="LeftBackwardKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu" instance=ExtResource( 2 )]
-margin_top = 122.0
-margin_bottom = 199.0
+margin_top = 99.0
+margin_bottom = 153.0
 
 [node name="ChangeKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftBackwardKey" index="0"]
+margin_bottom = 54.0
 focus_neighbour_top = NodePath("../../LeftForwardKey/ChangeKey")
 focus_neighbour_bottom = NodePath("../../LeftStrafeKey/ChangeKey")
 text = "Left Reverse"
 
+[node name="AssignedKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftBackwardKey" index="1"]
+margin_bottom = 54.0
+
 [node name="LeftStrafeKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu" instance=ExtResource( 2 )]
-margin_top = 209.0
-margin_bottom = 286.0
+margin_top = 163.0
+margin_bottom = 217.0
 
 [node name="ChangeKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftStrafeKey" index="0"]
+margin_bottom = 54.0
 focus_neighbour_top = NodePath("../../LeftBackwardKey/ChangeKey")
 focus_neighbour_bottom = NodePath("../../LeftFireKey/ChangeKey")
 text = "Left Strafe"
 
+[node name="AssignedKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftStrafeKey" index="1"]
+margin_bottom = 54.0
+
 [node name="LeftFireKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu" instance=ExtResource( 2 )]
-margin_top = 296.0
-margin_bottom = 373.0
+margin_top = 227.0
+margin_bottom = 281.0
 
 [node name="ChangeKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftFireKey" index="0"]
+margin_bottom = 54.0
 focus_neighbour_top = NodePath("../../LeftStrafeKey/ChangeKey")
 focus_neighbour_bottom = NodePath("../../RightForwardKey/ChangeKey")
 text = "Left Fire"
 
+[node name="AssignedKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/LeftFireKey" index="1"]
+margin_bottom = 54.0
+
 [node name="HSeparator2" type="HSeparator" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu"]
-margin_top = 383.0
+margin_top = 291.0
 margin_right = 440.0
-margin_bottom = 391.0
+margin_bottom = 299.0
 
 [node name="RightForwardKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu" instance=ExtResource( 2 )]
-margin_top = 401.0
-margin_bottom = 478.0
+margin_top = 309.0
+margin_bottom = 363.0
 
 [node name="ChangeKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightForwardKey" index="0"]
+margin_bottom = 54.0
 focus_neighbour_top = NodePath("../../LeftFireKey/ChangeKey")
 focus_neighbour_bottom = NodePath("../../RightBackwardKey/ChangeKey")
 text = "Right Drive"
 
+[node name="AssignedKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightForwardKey" index="1"]
+margin_bottom = 54.0
+
 [node name="RightBackwardKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu" instance=ExtResource( 2 )]
-margin_top = 488.0
-margin_bottom = 565.0
+margin_top = 373.0
+margin_bottom = 427.0
 
 [node name="ChangeKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightBackwardKey" index="0"]
+margin_bottom = 54.0
 focus_neighbour_top = NodePath("../../RightForwardKey/ChangeKey")
 focus_neighbour_bottom = NodePath("../../RightStrafeKey/ChangeKey")
 text = "Right Reverse"
 
+[node name="AssignedKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightBackwardKey" index="1"]
+margin_bottom = 54.0
+
 [node name="RightStrafeKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu" instance=ExtResource( 2 )]
-margin_top = 575.0
-margin_bottom = 652.0
+margin_top = 437.0
+margin_bottom = 491.0
 
 [node name="ChangeKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightStrafeKey" index="0"]
+margin_bottom = 54.0
 focus_neighbour_top = NodePath("../../RightBackwardKey/ChangeKey")
 focus_neighbour_bottom = NodePath("../../RightFireKey/ChangeKey")
 text = "Right Strafe"
 
+[node name="AssignedKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightStrafeKey" index="1"]
+margin_bottom = 54.0
+
 [node name="RightFireKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu" instance=ExtResource( 2 )]
-margin_top = 662.0
-margin_bottom = 742.0
+margin_top = 501.0
+margin_bottom = 562.0
 
 [node name="ChangeKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightFireKey" index="0"]
-margin_bottom = 80.0
+margin_bottom = 61.0
 focus_neighbour_top = NodePath("../../RightStrafeKey/ChangeKey")
 focus_neighbour_bottom = NodePath("../../../DefaultButton")
 text = "Right Fire"
 
 [node name="AssignedKey" parent="HBoxContainer/MenuPanel/SettingsMenu/ControlsMenu/RightFireKey" index="1"]
-margin_bottom = 80.0
+margin_bottom = 61.0
 
 [node name="HSeparator" type="HSeparator" parent="HBoxContainer/MenuPanel/SettingsMenu"]
-margin_top = 752.0
+margin_top = 572.0
 margin_right = 440.0
-margin_bottom = 760.0
+margin_bottom = 580.0
 
 [node name="DefaultButton" type="Button" parent="HBoxContainer/MenuPanel/SettingsMenu"]
-margin_top = 770.0
+margin_top = 590.0
 margin_right = 440.0
-margin_bottom = 810.0
+margin_bottom = 630.0
 rect_min_size = Vector2( 0, 40 )
 focus_neighbour_top = NodePath("../ControlsMenu/RightFireKey/ChangeKey")
 size_flags_horizontal = 3
@@ -146,9 +175,9 @@ text = "Reset to Defaults"
 script = ExtResource( 3 )
 
 [node name="SaveReturnButton" type="Button" parent="HBoxContainer/MenuPanel/SettingsMenu"]
-margin_top = 820.0
+margin_top = 640.0
 margin_right = 440.0
-margin_bottom = 860.0
+margin_bottom = 680.0
 rect_min_size = Vector2( 0, 40 )
 focus_neighbour_bottom = NodePath("../ControlsMenu/LeftForwardKey/ChangeKey")
 size_flags_horizontal = 3

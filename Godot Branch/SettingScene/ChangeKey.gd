@@ -28,17 +28,30 @@ func _input(event):
 			
 		#if keyboard event, register, and untoggle
 		if event is InputEventKey:
+			#get name of action from parent container
 			var action = self.get_parent().name
-			sceneRoot.map_key_to_action(event.scancode, action)
+			#use name to map input to action
+			sceneRoot.map_key_to_action(event.get_class(), event.scancode, action)
+			#deselect button toggle && restore
 			toggledState = false
 			self.text = originalText
+			#prevent retoggling from key assignment
 			self.pressed = false
 			sceneRoot.playAudio()
 			
 		#if joypad button event, register, and untoggle
 		if event is InputEventJoypadButton:
 			var action = self.get_parent().name
-			sceneRoot.map_key_to_action(event.button_index, action)
+			sceneRoot.map_key_to_action(event.get_class(), event.button_index, action)
+			toggledState = false
+			self.text = originalText
+			self.pressed = false
+			sceneRoot.playAudio()
+			
+		#if joypad button event, register, and untoggle
+		if event is InputEventJoypadMotion:
+			var action = self.get_parent().name
+			sceneRoot.map_key_to_action(event.get_class(), event.axis, action, event.axis_value)
 			toggledState = false
 			self.text = originalText
 			self.pressed = false

@@ -2,6 +2,7 @@ extends KinematicBody
 
 var SPEED = 0.05
 var controls = {}				#holds keymapping
+var axis_tolerance = 0.9		#helps with joystick drifting
 var animation_player			#the animation controller
 var player_action = "Idle"		#indicates player's last animation state, prevents loooping
 var player_null_state			#used for determining idle state
@@ -46,70 +47,75 @@ func _input(event):
 	#TRANSLATE 
 	#event to input code
 	var code
+	var axis = 0
 
 	if event is InputEventKey:				#keyboard events
 		code = event.scancode
 	elif event is InputEventJoypadButton:	#joypad events
 		code = event.button_index
+	elif event is InputEventJoypadMotion:	#joypad events
+		code = event.axis
+		if event.axis_value > 0:
+			axis = 1
+		elif event.axis_value < 0:
+			axis = -1
 	else:									#other events
 		return
 		
-		
+	#convert code to value array that matched control dictionary
+	#unknown bug: Arrays with same individual components != Array match
+	#use string instead
+	var inputValue= String([event.get_class(), code, axis])
+
 	#SET STATE
 	#state based on input code
-	if code == controls["LeftForwardKey"]:
-		if event.is_pressed():
-			player_state["LForward"] = true
-			player_state["SteerRight"] = true
-		else:
+	if inputValue == String(controls["LeftForwardKey"]):
+		player_state["LForward"] = true
+		player_state["SteerRight"] = true
+		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["LForward"] = false
 			player_state["SteerRight"] = false
 		
-	if code == controls["LeftBackwardKey"]:
-		if event.is_pressed():
-			player_state["LBackward"] = true
-			player_state["SteerLeft"] = true
-		else:
+	if inputValue == String(controls["LeftBackwardKey"]):
+		player_state["LBackward"] = true
+		player_state["SteerLeft"] = true
+		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["LBackward"] = false
 			player_state["SteerLeft"] = false
 		
 	#allow only one strafe event at any time
-	if code == controls["LeftStrafeKey"] && !player_state["Right"]:
-		if event.is_pressed():
-			player_state["Left"] = true
-		else:
+	if inputValue == String(controls["LeftStrafeKey"]) && !player_state["Right"]:
+		player_state["Left"] = true
+		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["Left"] = false
 		
 	#allow only one firing event at any time
-	if code == controls["LeftFireKey"] && !player_state["FireRight"]:
-		if !event.is_pressed():
+	if inputValue == String(controls["LeftFireKey"]) && !player_state["FireRight"]:
+		if event.is_pressed():
 			player_state["FireLeft"] = true
 	
-	if code == controls["RightForwardKey"]:
-		if event.is_pressed():
-			player_state["RForward"] = true
-			player_state["SteerLeft"] = true
-		else:
+	if inputValue == String(controls["RightForwardKey"]):
+		player_state["RForward"] = true
+		player_state["SteerLeft"] = true
+		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["RForward"] = false
 			player_state["SteerLeft"] = false
 		
-	if code == controls["RightBackwardKey"]:
-		if event.is_pressed():
-			player_state["RBackward"] = true
-			player_state["SteerRight"] = true
-		else:
+	if inputValue == String(controls["RightBackwardKey"]):
+		player_state["RBackward"] = true
+		player_state["SteerRight"] = true
+		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["RBackward"] = false
 			player_state["SteerRight"] = false
 		
 	#allow only one strafe event at any time
-	if code == controls["RightStrafeKey"] && !player_state["Left"]:
-		if event.is_pressed():
-			player_state["Right"] = true
-		else:
+	if inputValue == String(controls["RightStrafeKey"]) && !player_state["Left"]:
+		player_state["Right"] = true
+		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["Right"] = false
 	
 	#allow only one firing event at any time
-	if code == controls["RightFireKey"] && !player_state["FireLeft"]:
+	if inputValue == String(controls["RightFireKey"]) && !player_state["FireLeft"]:
 		if !event.is_pressed():
 			player_state["FireRight"] = true
 

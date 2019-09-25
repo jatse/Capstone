@@ -2,14 +2,15 @@ extends Control
 
 #The default key map
 var default_controls = {
-	"LeftForwardKey" : KEY_E,
-	"LeftBackwardKey" : KEY_D,
-	"LeftStrafeKey" : KEY_S,
-	"LeftFireKey" : KEY_F,
-	"RightForwardKey" : KEY_I,
-	"RightBackwardKey" : KEY_K,
-	"RightStrafeKey" : KEY_L,
-	"RightFireKey" : KEY_J
+	#Format is ["event class", global enum value, axis orientation (-1, 0 for N/A, or 1)
+	"LeftForwardKey" : ["InputEventKey", KEY_E, 0],
+	"LeftBackwardKey" : ["InputEventKey", KEY_D, 0],
+	"LeftStrafeKey" : ["InputEventKey", KEY_S, 0],
+	"LeftFireKey" : ["InputEventKey", KEY_F, 0],
+	"RightForwardKey" : ["InputEventKey", KEY_I, 0],
+	"RightBackwardKey" : ["InputEventKey", KEY_K, 0],
+	"RightStrafeKey" : ["InputEventKey", KEY_L, 0],
+	"RightFireKey" : ["InputEventKey", KEY_J, 0]
 }
 
 #The key map for this game instance
@@ -83,17 +84,27 @@ func set_keys_to_default():
 	controls = default_controls.duplicate()
 	update_keymap_UI()
 	
-#Changes key mapping for game instance
-func map_key_to_action(code, action):
-	controls[action] = code
+#Saves input information to controls dictionary
+func map_key_to_action(eventtype, code, action, axisValue = 0):
+	var roundedAxis = 0
+	if axisValue > 0:
+		roundedAxis = 1
+	elif axisValue < 0:
+		roundedAxis = -1
+	controls[action] = [eventtype, code, roundedAxis]
 	update_keymap_UI()
 	
 #Changes input code to string
-func get_input_name(code):
-	if code >= 17: #non joypad codes
-		return OS.get_scancode_string(code)
-	else: #joypad codes
-		return Input.get_joy_button_string(code)
+func get_input_name(inputValueArray):
+	if inputValueArray[0] == "InputEventKey":
+		return OS.get_scancode_string(inputValueArray[1])
+	if inputValueArray[0] == "InputEventJoypadButton":
+		return Input.get_joy_button_string(inputValueArray[1])
+	if inputValueArray[0] == "InputEventJoypadMotion":
+		if inputValueArray[2] > 0:
+			return Input.get_joy_axis_string(inputValueArray[1])
+		else:
+			return str("-" + Input.get_joy_axis_string(inputValueArray[1]))
 		
 #Save current keymap to file
 func save_keymap():
