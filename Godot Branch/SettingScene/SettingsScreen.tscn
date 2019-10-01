@@ -5,7 +5,7 @@
 [ext_resource path="res://SettingScene/DemoPlayer.gd" type="Script" id=3]
 [ext_resource path="res://Assets/PlayerUV.material" type="Material" id=4]
 [ext_resource path="res://Assets/sounds/motorHum.tres" type="AudioStream" id=5]
-[ext_resource path="res://Assets/sounds/fire_laser2.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/booster.tscn" type="PackedScene" id=6]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "player"
@@ -271,6 +271,7 @@ tracks/16/keys = PoolRealArray( 0, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.4791
 [sub_resource type="Animation" id=4]
 resource_name = "Idle"
 length = 5.0
+loop = true
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Armature:finger1_l")
 tracks/0/interp = 1
@@ -888,7 +889,7 @@ radius = 0.221243
 height = 0.0217066
 
 [sub_resource type="BoxShape" id=10]
-extents = Vector3( 0.506262, 0.121445, 0.179321 )
+extents = Vector3( 0.366858, 0.121445, 0.275589 )
 
 [sub_resource type="CylinderShape" id=11]
 radius = 0.143648
@@ -1017,6 +1018,7 @@ mesh = SubResource( 1 )
 material/0 = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+autoplay = "Idle"
 anims/FireLeft = SubResource( 2 )
 anims/FireRight = SubResource( 3 )
 anims/Idle = SubResource( 4 )
@@ -1030,22 +1032,65 @@ transform = Transform( 1, 0, 0, 0, -0.430657, -0.902516, 0, 0.902516, -0.430657,
 shape = SubResource( 9 )
 
 [node name="feet_collide" type="CollisionShape" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.126642, 0.0801798 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.126642, -0.029 )
 shape = SubResource( 10 )
 
 [node name="tank_collide" type="CollisionShape" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 0.959699, -0.281029, 0, 0.281029, 0.959699, 0, 0.860334, -0.251801 )
 shape = SubResource( 11 )
 
+[node name="LeftSpawnBullet" type="Position3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.404473, 0.802016, 0.856273 )
+
+[node name="RightSpawnBullet" type="Position3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.378663, 0.802016, 0.856273 )
+
+[node name="EngineSound" type="AudioStreamPlayer3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.507717, 0 )
+stream = ExtResource( 5 )
+unit_db = -30.0
+
+[node name="LeftBlasterSound" type="AudioStreamPlayer3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.407228, 0.796968, 0.855139 )
+unit_db = -20.0
+
+[node name="RightBlasterSound" type="AudioStreamPlayer3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.378095, 0.796968, 0.855139 )
+unit_db = -20.0
+
+[node name="rt-boost" parent="Player" instance=ExtResource( 6 )]
+transform = Transform( 0.907681, -0.116867, 0.403061, 0.37225, 0.667673, -0.644704, -0.193768, 0.735225, 0.649537, -0.219513, 0.884506, 0 )
+visible = false
+
+[node name="lt-boost" parent="Player" instance=ExtResource( 6 )]
+transform = Transform( 0.484017, -0.732337, -0.478968, 0.372251, 0.667678, -0.644697, 0.791932, 0.133748, 0.595781, 0.203479, 0.884506, 0 )
+visible = false
+
+[node name="rm-boost" parent="Player" instance=ExtResource( 6 )]
+transform = Transform( 0.717721, -0.0799214, 0.691729, 0.142083, 0.989301, -0.0331193, -0.681681, 0.122053, 0.721397, -0.175079, 0.720367, -0.0354004 )
+visible = false
+
+[node name="lm-boost" parent="Player" instance=ExtResource( 6 )]
+transform = Transform( 0.681677, -0.122055, -0.7214, 0.142085, 0.9893, -0.0331203, 0.717724, -0.0799225, 0.691726, 0.167358, 0.720367, -0.0354004 )
+visible = false
+
+[node name="rb-boost" parent="Player" instance=ExtResource( 6 )]
+transform = Transform( -0.978466, 0.194841, -0.0681244, 0.132772, 0.846835, 0.515017, 0.158036, 0.494882, -0.854469, -0.175079, 0.262878, 0.03302 )
+visible = false
+
+[node name="lb-boost" parent="Player" instance=ExtResource( 6 )]
+transform = Transform( -0.93363, 0.295625, 0.202338, 0.206129, 0.90526, -0.371504, -0.292994, -0.30514, -0.906115, 0.145115, 0.309111, 0.299033 )
+visible = false
+
 [node name="Camera" type="Camera" parent="Player"]
-transform = Transform( -1, 6.54603e-008, -5.79457e-008, 1.19019e-008, 0.75859, 0.651569, 8.66088e-008, 0.651569, -0.75859, 1.08389, 2.47306, -1.91756 )
+transform = Transform( -1, 6.54602e-008, -5.79456e-008, 1.19019e-008, 0.75859, 0.651569, 8.66088e-008, 0.651569, -0.75859, 1.08389, 2.47306, -1.91756 )
 projection = 1
 current = true
 fov = 62.7728
 size = 3.58243
 
 [node name="DirectionalLight" type="DirectionalLight" parent="Player"]
-transform = Transform( 0.337627, 0.519235, 0.785113, -0.295484, -0.733463, 0.612145, 0.893699, -0.438665, -0.0942113, 2.43143, 2.90405, 0.554257 )
+transform = Transform( 0.337627, 0.519235, 0.785113, -0.295484, -0.733463, 0.612145, 0.893699, -0.438665, -0.0942112, 2.43143, 2.90405, 0.554257 )
 light_color = Color( 1, 0, 0, 1 )
 
 [node name="DirectionalLight2" type="DirectionalLight" parent="Player"]
@@ -1055,15 +1100,3 @@ light_color = Color( 0, 1, 0.458824, 1 )
 [node name="DirectionalLight3" type="DirectionalLight" parent="Player"]
 transform = Transform( -0.999835, -0.017482, 0.00488461, 0.0051647, -0.0160125, 0.999858, -0.0174013, 0.999719, 0.0161001, 0.15907, 5.04101, 0.206151 )
 shadow_enabled = true
-
-[node name="EngineSound" type="AudioStreamPlayer3D" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.08564, 0.360739, -1.2012 )
-stream = ExtResource( 5 )
-
-[node name="LeftBlaster" type="AudioStreamPlayer3D" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.47487, 0.817776, 0.761353 )
-stream = ExtResource( 6 )
-
-[node name="RightBlaster" type="AudioStreamPlayer3D" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68964, 0.817776, 0.757921 )
-stream = ExtResource( 6 )

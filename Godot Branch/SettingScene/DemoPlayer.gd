@@ -17,9 +17,10 @@ var player_state = {			#indicates which keys are down
 		"FireRight" : false,
 		"SteerLeft" : false,
 		"SteerRight" : false}
+var PLAYER_BULLET = preload("res://Assets/PlayerBullet.tscn")
 var engine
-var leftBlaster
-var rightBlaster
+var leftblaster
+var rightblaster
 
 
 # Called when the node enters the scene tree for the first time.
@@ -27,8 +28,8 @@ func _ready():
 	#get character variables
 	animation_player = get_node("AnimationPlayer")
 	engine = get_node("EngineSound")
-	leftBlaster = get_node("LeftBlaster")
-	rightBlaster = get_node("RightBlaster")
+	leftblaster = get_node("LeftBlasterSound")
+	rightblaster = get_node("RightBlasterSound")
 	
 	#used to set idle state
 	player_null_state = player_state.duplicate()
@@ -72,22 +73,28 @@ func _input(event):
 	if inputValue == String(controls["LeftForwardKey"]):
 		player_state["LForward"] = true
 		player_state["SteerRight"] = true
+		$"lt-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["LForward"] = false
 			player_state["SteerRight"] = false
+			$"lt-boost".visible = false
 		
 	if inputValue == String(controls["LeftBackwardKey"]):
 		player_state["LBackward"] = true
 		player_state["SteerLeft"] = true
+		$"lb-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["LBackward"] = false
 			player_state["SteerLeft"] = false
+			$"lb-boost".visible = false
 		
 	#allow only one strafe event at any time
 	if inputValue == String(controls["LeftStrafeKey"]) && !player_state["Right"]:
 		player_state["Left"] = true
+		$"rm-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["Left"] = false
+			$"rm-boost".visible = false
 		
 	#allow only one firing event at any time
 	if inputValue == String(controls["LeftFireKey"]) && !player_state["FireRight"]:
@@ -97,22 +104,28 @@ func _input(event):
 	if inputValue == String(controls["RightForwardKey"]):
 		player_state["RForward"] = true
 		player_state["SteerLeft"] = true
+		$"rt-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["RForward"] = false
 			player_state["SteerLeft"] = false
+			$"rt-boost".visible = false
 		
 	if inputValue == String(controls["RightBackwardKey"]):
 		player_state["RBackward"] = true
 		player_state["SteerRight"] = true
+		$"rb-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["RBackward"] = false
 			player_state["SteerRight"] = false
+			$"rb-boost".visible = false
 		
 	#allow only one strafe event at any time
 	if inputValue == String(controls["RightStrafeKey"]) && !player_state["Left"]:
 		player_state["Right"] = true
+		$"lm-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["Right"] = false
+			$"lm-boost".visible = false
 	
 	#allow only one firing event at any time
 	if inputValue == String(controls["RightFireKey"]) && !player_state["FireLeft"]:
@@ -127,16 +140,19 @@ func animatePlayer():
 	#Firing takes top priority
 	#Do not play animation if already playing
 	if currentAnimation != "FireLeft" && currentAnimation != "FireRight":
+		#Handle firing action: top priority
 		if player_state["FireLeft"]:
 			animation_player.play("FireLeft")
 			player_action = "Firing"
-			leftBlaster.play()
+			spawnProjectile($LeftSpawnBullet.global_transform)
 			player_state["FireLeft"] = false
+			playAudio(leftblaster)
 		elif player_state["FireRight"]:
 			animation_player.play("FireRight")
 			player_action = "Firing"
-			rightBlaster.play()
+			spawnProjectile($RightSpawnBullet.global_transform)
 			player_state["FireRight"] = false
+			playAudio(rightblaster)
 			
 		#Handle movement animations
 		elif player_state["LForward"] || player_state["RForward"]:
@@ -183,6 +199,25 @@ func animatePlayer():
 		rotate_y(SPEED/2.5)
 	if player_state["SteerRight"]:
 		rotate_y(-SPEED/2.5)
+
+
+#spawns a bullet
+func spawnProjectile(proj_trans):
+	var projectile = PLAYER_BULLET.instance()
+	projectile.transform = proj_trans
+	get_parent().add_child(projectile)
+
+
+func playAudio(audioPlayer):
+	#blaster sounds
+	if audioPlayer == leftblaster || audioPlayer == rightblaster:
+		#load random track
+		match randi()%2:
+			0:
+				audioPlayer.stream = load("res://Assets/sounds/fire_laser.wav")
+			1:
+				audioPlayer.stream = load("res://Assets/sounds/fire_laser2.wav")
+		audioPlayer.play()
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
