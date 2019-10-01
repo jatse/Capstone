@@ -22,6 +22,7 @@ config/icon="res://icon.png"
 [autoload]
 
 global="*res://Assets/global.gd"
+Server="*res://Assets/Server.gd"
 
 [compression]
 
@@ -31,7 +32,6 @@ formats/gzip/compression_level=9
 [debug]
 
 settings/fps/force_fps=60
-settings/stdout/print_fps=true
 
 [display]
 

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Assets/AIplayer.gd" type="Script" id=1]
 [ext_resource path="res://Assets/PlayerUV.material" type="Material" id=2]
-[ext_resource path="res://Assets/green_skin.tres" type="Material" id=3]
+[ext_resource path="res://Assets/booster.tscn" type="PackedScene" id=3]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "player"
@@ -20,6 +20,7 @@ surfaces/0 = {
 }
 
 [sub_resource type="Animation" id=2]
+resource_name = "FireLeft"
 length = 0.25
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Armature:finger1_l")
@@ -142,6 +143,7 @@ tracks/16/enabled = true
 tracks/16/keys = PoolRealArray( 0, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.47911e-031, -2.48154e-024, 1, 1, 1, 1, 0.25, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.47911e-031, -2.48154e-024, 1, 1, 1, 1 )
 
 [sub_resource type="Animation" id=3]
+resource_name = "FireRight"
 length = 0.25
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Armature:finger1_l")
@@ -264,6 +266,7 @@ tracks/16/enabled = true
 tracks/16/keys = PoolRealArray( 0, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.47911e-031, -2.48154e-024, 1, 1, 1, 1, 0.25, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.47911e-031, -2.48154e-024, 1, 1, 1, 1 )
 
 [sub_resource type="Animation" id=4]
+resource_name = "Idle"
 length = 5.0
 loop = true
 tracks/0/type = "transform"
@@ -387,6 +390,7 @@ tracks/16/enabled = true
 tracks/16/keys = PoolRealArray( 0, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.47911e-031, -2.48154e-024, 1, 1, 1, 1, 0.0666667, 1, -3.30872e-024, 0, 0, -0.000359476, -1.65302e-024, -3.72291e-024, 1, 1, 1, 1, 2.53333, 1, -3.30872e-024, 0, 0, -0.0348747, 1.44238e-025, -4.13339e-024, 0.999392, 1, 1, 1, 5, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.47911e-031, -2.48154e-024, 1, 1, 1, 1 )
 
 [sub_resource type="Animation" id=5]
+resource_name = "MoveBackward"
 length = 0.125
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Armature:finger1_l")
@@ -509,6 +513,7 @@ tracks/16/enabled = true
 tracks/16/keys = PoolRealArray( 0, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.47911e-031, -2.48154e-024, 1, 1, 1, 1, 0.0666667, 1, -1.34348e-018, -0.0242687, 0.0108053, -1.80155e-005, -1.65432e-024, -2.06798e-024, 1, 1, 1, 1, 0.125, 1, -2.07326e-018, -0.0374516, 0.0166748, -0.0262736, 6.5199e-026, -2.48068e-024, 0.999655, 1, 1, 1 )
 
 [sub_resource type="Animation" id=6]
+resource_name = "MoveForward"
 length = 0.125
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Armature:finger1_l")
@@ -631,6 +636,7 @@ tracks/16/enabled = true
 tracks/16/keys = PoolRealArray( 0, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.47911e-031, -2.48154e-024, 1, 1, 1, 1, 0.0666667, 1, -1.34348e-018, -0.0242687, 0.0108053, -1.80155e-005, -1.65432e-024, -2.06798e-024, 1, 1, 1, 1, 0.125, 1, -2.07326e-018, -0.0374516, 0.0166748, -3.00556e-005, 2.48861e-029, -8.27181e-025, 1, 1, 1, 1 )
 
 [sub_resource type="Animation" id=7]
+resource_name = "StrafeLeft"
 length = 0.125
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Armature:finger1_l")
@@ -753,6 +759,7 @@ tracks/16/enabled = true
 tracks/16/keys = PoolRealArray( 0, 1, -3.30872e-024, 0, 0, 5.96047e-008, -1.47911e-031, -2.48154e-024, 1, 1, 1, 1, 0.0666667, 1, -1.36076e-018, -0.0245809, 0.0109443, 5.96047e-008, -1.65436e-024, -2.06795e-024, 1, 1, 1, 1, 0.125, 1, -2.09994e-018, -0.0379335, 0.0168894, 5.96047e-008, -1.47911e-031, -2.48154e-024, 1, 1, 1, 1 )
 
 [sub_resource type="Animation" id=8]
+resource_name = "StrafeRight"
 length = 0.125
 tracks/0/type = "transform"
 tracks/0/path = NodePath("Armature:finger1_l")
@@ -879,7 +886,7 @@ radius = 0.221243
 height = 0.0217066
 
 [sub_resource type="BoxShape" id=10]
-extents = Vector3( 0.296405, 0.121445, 0.0714219 )
+extents = Vector3( 0.366858, 0.121445, 0.275589 )
 
 [sub_resource type="CylinderShape" id=11]
 radius = 0.143648
@@ -981,7 +988,7 @@ bones/16/bound_children = [  ]
 
 [node name="player" type="MeshInstance" parent="Armature"]
 mesh = SubResource( 1 )
-material/0 = ExtResource( 3 )
+material/0 = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
@@ -1005,21 +1012,50 @@ shape = SubResource( 10 )
 transform = Transform( 1, 0, 0, 0, 0.959699, -0.281029, 0, 0.281029, 0.959699, 0, 0.860334, -0.251801 )
 shape = SubResource( 11 )
 
-[node name="areaDetector" type="Area" parent="."]
-
-[node name="detect_area" type="CollisionShape" parent="areaDetector"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.613507, 0 )
-shape = SubResource( 12 )
-
-[node name="obstacleDetector" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.841431, 0.338196 )
-enabled = true
-
 [node name="LeftSpawnBullet" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.404473, 0.802016, 0.856273 )
 
 [node name="RightSpawnBullet" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.378663, 0.802016, 0.856273 )
+
+[node name="LeftBlasterSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.407228, 0.796968, 0.855139 )
+unit_db = -20.0
+
+[node name="RightBlasterSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.378095, 0.796968, 0.855139 )
+unit_db = -20.0
+
+[node name="OuterSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.725708, 0.292542 )
+
+[node name="rt-boost" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.907681, -0.116867, 0.403061, 0.37225, 0.667673, -0.644704, -0.193768, 0.735225, 0.649537, -0.219513, 0.884506, 0 )
+visible = false
+
+[node name="lt-boost" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.484017, -0.732337, -0.478968, 0.372251, 0.667678, -0.644697, 0.791932, 0.133748, 0.595781, 0.203479, 0.884506, 0 )
+visible = false
+
+[node name="rm-boost" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.717721, -0.0799214, 0.691729, 0.142083, 0.989301, -0.0331193, -0.681681, 0.122053, 0.721397, -0.175079, 0.720367, -0.0354004 )
+visible = false
+
+[node name="lm-boost" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.681677, -0.122055, -0.7214, 0.142085, 0.9893, -0.0331203, 0.717724, -0.0799225, 0.691726, 0.167358, 0.720367, -0.0354004 )
+visible = false
+
+[node name="rb-boost" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.978466, 0.194841, -0.0681244, 0.132772, 0.846835, 0.515017, 0.158036, 0.494882, -0.854469, -0.175079, 0.262878, 0.03302 )
+visible = false
+
+[node name="lb-boost" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.93363, 0.295625, 0.202338, 0.206129, 0.90526, -0.371504, -0.292994, -0.30514, -0.906115, 0.145115, 0.309111, 0.299033 )
+visible = false
+
+[node name="obstacleDetector" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.841431, 0.338196 )
+enabled = true
 
 [node name="ray_dest" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20 )
@@ -1027,11 +1063,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20 )
 [node name="RayCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84076, 0.336638 )
 
-[node name="RightBlasterSound" type="AudioStreamPlayer3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.378318, 0.80066, 0.854941 )
+[node name="areaDetector" type="Area" parent="."]
 
-[node name="LeftBlasterSound" type="AudioStreamPlayer3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.403936, 0.80066, 0.854941 )
-
-[node name="OuterSound" type="AudioStreamPlayer3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.789698, 0.305336 )
+[node name="detect_area" type="CollisionShape" parent="areaDetector"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.613507, 0 )
+shape = SubResource( 12 )

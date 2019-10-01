@@ -61,6 +61,13 @@ func _ready():
 func ai_process():
 	#clear last command
 	player_state = player_null_state.duplicate()
+	#reset boosters
+	$"lt-boost".visible = false
+	$"rt-boost".visible = false
+	$"lm-boost".visible = false
+	$"rm-boost".visible = false
+	$"lb-boost".visible = false
+	$"rb-boost".visible = false
 
 	#REGULAR PROGRAM: search and gather gems
 	if AI_state == "normal":
@@ -69,9 +76,13 @@ func ai_process():
 			#rotate until in sight ...
 			if forward_detect == "none" || forward_detect == "wall":
 				player_state["SteerRight"] = true
+				$"lt-boost".visible = true
+				$"rb-boost".visible = true
 			#if gem detected, stop turning and go forward to collect
 			elif forward_detect == "gem":
 				player_state["Forward"] = true
+				$"lt-boost".visible = true
+				$"rt-boost".visible = true
 			#if enemy spotted, try to destroy
 			elif forward_detect == "enemy":
 				var chance = randi()%10	#a 2/modulo divisor chance to shoot
@@ -81,17 +92,24 @@ func ai_process():
 					player_state["FireRight"] = true
 				else:
 					player_state["Forward"] = true
+					$"lt-boost".visible = true
+					$"rt-boost".visible = true
 		#if nothing in area
 		else:
 			#move if path clear, occasionally side step
 			if forward_detect == "none":
 				if randi()%10 == 0:
 					player_state["Right"] = true
+					$"lm-boost".visible = true
 				else:
 					player_state["Forward"] = true
+					$"lt-boost".visible = true
+					$"rt-boost".visible = true
 			#otherwise rotate
 			else:
 				player_state["SteerRight"] = true
+				$"lt-boost".visible = true
+				$"rb-boost".visible = true
 				
 	#EMERGENCY PROGRAM: escape until alone
 	else:
@@ -99,11 +117,16 @@ func ai_process():
 			if forward_detect == "none":
 				if randi()%10 == 0:
 					player_state["Left"] = true
+					$"rm-boost".visible = true
 				else:
 					player_state["Forward"] = true
+					$"lt-boost".visible = true
+					$"rt-boost".visible = true
 			#otherwise rotate
 			else:
 				player_state["SteerLeft"] = true
+				$"rt-boost".visible = true
+				$"lb-boost".visible = true
 		else:
 			AI_state = "normal"
 

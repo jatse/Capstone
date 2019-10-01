@@ -7,6 +7,7 @@ var player
 var ai_green
 var ai_blue
 var ai_yellow
+var green_skin = preload("res://Assets/green_skin.tres")
 var blue_skin = preload("res://Assets/blue_skin.tres")
 var yellow_skin = preload("res://Assets/yellow_skin.tres")
 
@@ -18,7 +19,8 @@ func _ready():
 	ai_blue = get_node("AIPlayer_blue")
 	ai_yellow = get_node("AIPlayer_yellow")
 	
-	#make blue and yellow match namesake
+	#make ai players  match namesake
+	get_node("AIPlayer_green/Armature/player").set_surface_material(0, green_skin)
 	get_node("AIPlayer_blue/Armature/player").set_surface_material(0, blue_skin)
 	get_node("AIPlayer_yellow/Armature/player").set_surface_material(0, yellow_skin)
 

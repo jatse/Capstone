@@ -1,7 +1,7 @@
 extends KinematicBody
 
 #player variables
-var MAX_SPEED = 0.10
+var MAX_SPEED = 0.08
 var MIN_SPEED = 0.05
 var mass = 0.0
 var MAX_MASS = 2000.0
@@ -10,7 +10,7 @@ var damaged = 0
 var MAX_ENERGY = 1000
 var MOVE_COST = 1
 var FIRE_COST = 10
-var RECOVERY_RATE = 30	#amount recovered per interval
+var RECOVERY_RATE = 35	#amount recovered per interval
 var RECOVERY_SPEED = .3 #duration(seconds) between intervals
 var gravity
 var playerUI
@@ -120,22 +120,28 @@ func _input(event):
 	if inputValue == String(controls["LeftForwardKey"]):
 		player_state["LForward"] = true
 		player_state["SteerRight"] = true
+		$"lt-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["LForward"] = false
 			player_state["SteerRight"] = false
+			$"lt-boost".visible = false
 		
 	if inputValue == String(controls["LeftBackwardKey"]):
 		player_state["LBackward"] = true
 		player_state["SteerLeft"] = true
+		$"lb-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["LBackward"] = false
 			player_state["SteerLeft"] = false
+			$"lb-boost".visible = false
 		
 	#allow only one strafe event at any time
 	if inputValue == String(controls["LeftStrafeKey"]) && !player_state["Right"]:
 		player_state["Left"] = true
+		$"rm-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["Left"] = false
+			$"rm-boost".visible = false
 		
 	#allow only one firing event at any time
 	if inputValue == String(controls["LeftFireKey"]) && !player_state["FireRight"]:
@@ -145,22 +151,28 @@ func _input(event):
 	if inputValue == String(controls["RightForwardKey"]):
 		player_state["RForward"] = true
 		player_state["SteerLeft"] = true
+		$"rt-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["RForward"] = false
 			player_state["SteerLeft"] = false
+			$"rt-boost".visible = false
 		
 	if inputValue == String(controls["RightBackwardKey"]):
 		player_state["RBackward"] = true
 		player_state["SteerRight"] = true
+		$"rb-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["RBackward"] = false
 			player_state["SteerRight"] = false
+			$"rb-boost".visible = false
 		
 	#allow only one strafe event at any time
 	if inputValue == String(controls["RightStrafeKey"]) && !player_state["Left"]:
 		player_state["Right"] = true
+		$"lm-boost".visible = true
 		if !event.is_pressed() || (event is InputEventJoypadMotion && abs(event.axis_value) < axis_tolerance):
 			player_state["Right"] = false
+			$"lm-boost".visible = false
 	
 	#allow only one firing event at any time
 	if inputValue == String(controls["RightFireKey"]) && !player_state["FireLeft"]:
@@ -339,7 +351,7 @@ func _process(delta):
 	if energy >= MAX_ENERGY:
 		energy = MAX_ENERGY
 		
-	#play warning sound if enevery below 100
+	#play warning sound if energy below 100
 	if energy < 100 && !emergency.is_playing():
 		emergency.play()
 	elif energy > 100 && emergency.is_playing():
@@ -350,4 +362,4 @@ func _process(delta):
 	move_and_collide(get_transform().basis.xform(Vector3(0, -gravity, 0)))
 	
 	#update UI
-	playerUI.updateUI(energy, mass)
+	playerUI.updateUI(energy)

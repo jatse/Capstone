@@ -3,11 +3,9 @@ extends Control
 var gameClock
 var clockDisplay
 var energyLevel
-var massMeter
-var overheatCover
-var overloadCover
 var ticker
 var timeElapsed = 0
+var fpsCounter
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,10 +16,8 @@ func _ready():
 	
 	#define UI elements
 	energyLevel = get_node("EnergyLevel")
-	massMeter = get_node("MassMeter")
-	overheatCover = get_node("overheatWarning")
-	overloadCover = get_node("overloadWarning")
 	ticker = get_node("AudioStreamPlayer")
+	fpsCounter = get_node("fpsCounter")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -56,19 +52,7 @@ func flicker():
 	get_node("damage").visible = true
 
 #sets UI text
-func updateUI(energy, mass):
+func updateUI(energy):
 	#update meters
 	energyLevel.set_value(energy)
-	massMeter.set_text(str(mass))
-	
-	#enable warnings
-	if energy < 100:
-		overheatCover.set_visible(false)
-	else:
-		overheatCover.set_visible(true)
-		
-	if mass >= 2000:
-		overloadCover.set_visible(false)
-	else:
-		overloadCover.set_visible(true)
-	
+	fpsCounter.text = str(int(Engine.get_frames_per_second()))

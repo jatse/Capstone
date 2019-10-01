@@ -17,7 +17,8 @@ func _on_SettingsButton_pressed():
 
 func _on_QuitButton_pressed():
 	playAudio("quit")
-
+func _on_MultiPlayerButton_pressed():
+	playAudio("multiplayer")
 
 #plays audio depending on action
 func playAudio(track):
@@ -42,6 +43,8 @@ func playAudio(track):
 		#do action accordingly
 		if track == "singlePlayer":
 			get_node("/root/global").gotoScene("res://SinglePlayerScene/stage1.tscn")
+		if track == "multiplayer":
+			get_node("/root/global").gotoScene("res://MultiplayerScene/Lobby.tscn")
 		elif track == "settings":
 			get_node("/root/global").gotoScene("res://SettingScene/SettingsScreen.tscn")
 		elif track == "quit":

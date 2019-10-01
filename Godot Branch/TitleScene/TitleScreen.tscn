@@ -81,6 +81,15 @@ margin_bottom = 295.0
 text = "Exit Game"
 align = 0
 
+[node name="MultiPlayerButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
+visible = false
+margin_left = 0.0
+margin_top = 315.0
+margin_right = 352.0
+margin_bottom = 400.0
+text = "MultiPlayer"
+align = 0
+
 [node name="MenuSounds" type="AudioStreamPlayer" parent="VBoxContainer/HBoxContainer/Menu"]
 volume_db = -10.0
 
@@ -90,7 +99,7 @@ margin_right = 1120.0
 margin_bottom = 560.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
-text = "          Alpha Release 0.0.1"
+text = "          Alpha Release 0.0.2"
 valign = 2
 
 [node name="GemSplash" type="Sprite" parent="."]
@@ -99,3 +108,4 @@ texture = ExtResource( 5 )
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/SinglePlayerButton" to="VBoxContainer/HBoxContainer/Menu" method="_on_SinglePlayerButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/SettingsButton" to="VBoxContainer/HBoxContainer/Menu" method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/QuitButton" to="VBoxContainer/HBoxContainer/Menu" method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/MultiPlayerButton" to="VBoxContainer/HBoxContainer/Menu" method="_on_MultiPlayerButton_pressed"]
