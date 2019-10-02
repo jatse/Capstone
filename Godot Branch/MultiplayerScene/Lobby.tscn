@@ -95,3 +95,4 @@ margin_bottom = 32.0
 text = "0"
 [connection signal="pressed" from="LobbyContainer/LobbyControl/HostButton" to="." method="_on_HostButton_pressed"]
 [connection signal="pressed" from="LobbyContainer/LobbyControl/JoinButton" to="." method="_on_JoinButton_pressed"]
+[connection signal="pressed" from="LobbyContainer/LobbyControl/StartButton" to="." method="_on_StartButton_pressed"]
