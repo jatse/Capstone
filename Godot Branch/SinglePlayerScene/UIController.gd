@@ -6,12 +6,13 @@ var energyLevel
 var ticker
 var timeElapsed = 0
 var fpsCounter
+var GAME_TIME = 300 #duration of the game
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#Start the game timer
 	gameClock = get_node("Timer")
-	gameClock.start(300)
+	gameClock.start(GAME_TIME)
 	clockDisplay = get_node("TimerLabel")
 	
 	#define UI elements

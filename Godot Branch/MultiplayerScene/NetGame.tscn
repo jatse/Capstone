@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://MultiplayerScene/NetGame.gd" type="Script" id=1]
 [ext_resource path="res://SinglePlayerScene/playerUI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/map_stage1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/NetEnemySpawn.tscn" type="PackedScene" id=4]
 
 [node name="NetGame" type="Spatial"]
 script = ExtResource( 1 )
@@ -42,3 +43,15 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 35
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( -4.37114e-008, -1, -4.37114e-008, 0, -4.37114e-008, 1, -1, 4.37114e-008, 1.91069e-015, 0, 130, 0 )
 far = 600.0
+
+[node name="SpawnPoint" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.91223, -2.95807, 73.2011 )
+
+[node name="SpawnPoint2" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.507, -2.95807, 15.6502 )
+
+[node name="SpawnPoint3" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.3053, -2.95807, -11.3703 )
+
+[node name="SpawnPoint4" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.955471, -2.95807, -71.2483 )

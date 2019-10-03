@@ -889,7 +889,7 @@ radius = 0.221243
 height = 0.0217066
 
 [sub_resource type="BoxShape" id=10]
-extents = Vector3( 0.366858, 0.121445, 0.275589 )
+extents = Vector3( 0.366858, 0.347638, 0.275589 )
 
 [sub_resource type="CylinderShape" id=11]
 radius = 0.143648
@@ -1007,7 +1007,7 @@ transform = Transform( 1, 0, 0, 0, -0.430657, -0.902516, 0, 0.902516, -0.430657,
 shape = SubResource( 9 )
 
 [node name="feet_collide" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.126642, -0.029 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.354247, -0.029 )
 shape = SubResource( 10 )
 
 [node name="tank_collide" type="CollisionShape" parent="."]
