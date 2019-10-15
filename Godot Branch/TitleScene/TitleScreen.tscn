@@ -64,29 +64,29 @@ margin_bottom = 85.0
 text = "Single Player"
 align = 0
 
-[node name="SettingsButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
+[node name="MultiPlayerButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
 margin_left = 0.0
 margin_top = 105.0
 margin_right = 352.0
 margin_bottom = 190.0
+text = "MultiPlayer"
+align = 0
+
+[node name="SettingsButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_top = 210.0
+margin_right = 352.0
+margin_bottom = 295.0
 toggle_mode = true
 text = "Settings"
 align = 0
 
 [node name="QuitButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
 margin_left = 0.0
-margin_top = 210.0
-margin_right = 352.0
-margin_bottom = 295.0
-text = "Exit Game"
-align = 0
-
-[node name="MultiPlayerButton" parent="VBoxContainer/HBoxContainer/Menu" instance=ExtResource( 3 )]
-margin_left = 0.0
 margin_top = 315.0
 margin_right = 352.0
 margin_bottom = 400.0
-text = "MultiPlayer"
+text = "Exit Game"
 align = 0
 
 [node name="MenuSounds" type="AudioStreamPlayer" parent="VBoxContainer/HBoxContainer/Menu"]
@@ -98,13 +98,13 @@ margin_right = 1120.0
 margin_bottom = 613.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
-text = "          Alpha Release 0.0.2"
+text = "          Alpha Release 0.0.3"
 valign = 2
 
 [node name="GemSplash" type="Sprite" parent="."]
 position = Vector2( 178.596, 311.334 )
 texture = ExtResource( 5 )
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/SinglePlayerButton" to="VBoxContainer/HBoxContainer/Menu" method="_on_SinglePlayerButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/MultiPlayerButton" to="VBoxContainer/HBoxContainer/Menu" method="_on_MultiPlayerButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/SettingsButton" to="VBoxContainer/HBoxContainer/Menu" method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/QuitButton" to="VBoxContainer/HBoxContainer/Menu" method="_on_QuitButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Menu/MultiPlayerButton" to="VBoxContainer/HBoxContainer/Menu" method="_on_MultiPlayerButton_pressed"]
